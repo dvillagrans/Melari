@@ -24,8 +24,8 @@ const { title } = Astro.props as LayoutProps;
     />
 
     <title>{title}</title>
-  </head>
-  <body>
+    <link rel="icon" href="/public/MELARIICON.jpg" />
+  </head><body>
     <main class="bg-main bg-no-repeat bg-cover bg-center">
       <Navbar client:load />
       <slot />

@@ -3,6 +3,7 @@ import MainLayout from "../layouts/main-layout.astro";
 import QuoteText from "../components/quote.tsx";
 import Facebook from "../icons/facebook.tsx";
 import Instagram from "../icons/instagram.tsx";
+import MapsSection from "../components/MapsSection";
 ---
 
 <MainLayout title="Melari Spa">
@@ -28,7 +29,7 @@ import Instagram from "../icons/instagram.tsx";
   <!-- Quote Section -->
 
   <section
-    class="w-full px-12 lg:px-0 pt-[100px] lg:pt-[200px] lg:max-w-[1200px] mx-auto flex items-center justify-center"
+    class="w-full px-12 lg:px-0 pt-[100px] lg:pt-[100px] lg:max-w-[1200px] mx-auto flex items-center justify-center"
   >
     <QuoteText
       text="I like an interior that defies labeling. I don't really want someone to walk into a room and know that I did it"
@@ -84,56 +85,12 @@ import Instagram from "../icons/instagram.tsx";
           of using that it has a more-or-less normal.
         </p>
       </div>
-      <img src="/about2.webp" alt="" />
+      <img src="/about2.jpg" alt="" />
     </div>
   </section>
 
-  <!-- What People Think About Us Section -->
-
-  <section
-    class="w-full py-[100px] lg:py-[185px] mt-[173px] px-12 lg:px-0 mx-auto bg-primary-300"
-  >
-    <div class="w-full flex flex-col gap-10 lg:max-w-[1200px] mx-auto">
-      <h2
-        class="font-dm tracking-wide text-center leading-[37px] lg:leading-[62.50px] text-[30px] lg:text-[50px] w-full lg:max-w-[50%] pb-9 mx-auto"
-      >
-        What the People Thinks About Us
-      </h2>
-      <div class="flex w-full overflow-x-scroll gap-4 flex-row no-scrollbar">
-        <img src="/person1.png" alt="" />
-        <img src="/person2.png" alt="" />
-        <div
-          class="flex flex-col gap-10 w-full justify-between py-[70px] px-7 bg-white min-w-[284px] items-center rounded-[32px]"
-        >
-          <p class="flex flex-col tracking-tight leading-9 text-center">
-            <span class="text-primary-200 text-lg lg:text-[25px] font-dm"
-              >Nattasha Julie</span
-            >
-            <span class="text-text-gray-200 text-base lg:text-lg font-jost">
-              Design, Australia</span
-            >
-          </p>
-          <div class="flex gap-6">
-            <a href="/">
-              <Facebook />
-            </a>
-            <a href="/">
-              <Instagram />
-            </a>
-          </div>
-          <p class="flex flex-col tracking-tight leading-9 text-center">
-            <span class="text-text-gray-200 text-base lg:text-lg font-jost">
-              +1 (378) 400-1234</span
-            >
-            <span class="text-text-gray-200 text-base lg:text-lg font-jost">
-              julie@email.com</span
-            >
-          </p>
-        </div>
-        <img src="/person3.png" alt="" />
-      </div>
-    </div>
-  </section>
+  <!-- Maps Section -->
+  <MapsSection />
 </MainLayout>
 
 <style>

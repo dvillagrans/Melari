@@ -9,7 +9,7 @@ module.exports = {
 			backgroundImage: {
 				hero: "url('/banner.webp')",
 				main: "url('/Background.jpg')",
-				about: "url('/aboutpage-bg.png')",
+				about: "url('/aboutpage-bg.jpg')",
 				services: "url('/servicespage-bg.jpg')",
 				contact: "url('/contactpage-bg.jpg')",
 			},

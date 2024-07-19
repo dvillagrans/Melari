@@ -13,7 +13,7 @@ interface AnimatedProjectsSectionProps {
 export const AnimatedProjectsSection: React.FC<AnimatedProjectsSectionProps> = ({ projects }) => {
   return (
     <section
-      className="lg:max-w-[1200px] px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[200px]"
+      className="lg:max-w-[1200px] px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[100px]"
     >
       <h2
         className="font-dm tracking-wide text-center leading-[37px] lg:leading-[62.50px] text-[30px] lg:text-[50px] w-full lg:max-w-[50%] pb-2 mx-auto"

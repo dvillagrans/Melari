@@ -43,7 +43,7 @@ export const AnimatedExperienceSection: React.FC<AnimatedExperienceSectionProps>
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-primary-300 px-12 xl:px-0 mx-auto mt-[100px] lg:mt-[200px] py-[151px]"
+      className="w-full bg-primary-300 px-12 xl:px-0 mx-auto mt-[100px] lg:mt-[200px] py-[151px] lg:pt[100px}"
     >
       <div className="w-full max-w-[1200px] mx-auto flex lg:justify-center items-center overflow-x-scroll no-scrollbar">
         {experiences.map((exp, i) => (

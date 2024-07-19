@@ -38,7 +38,7 @@ export const AnimatedVideoSection: React.FC<AnimatedVideoSectionProps> = ({ titl
   return (
     <section
       ref={sectionRef}
-      className="w-full px-12 xl:px-0 mx-auto pt-[100px] lg:pt-[200px] pb-[100px]"
+      className="w-full px-12 xl:px-0 mx-auto pt-[100px] lg:pt-[100px] pb-[100px]"
     >
       <div
         className="w-full max-w-[1200px] mx-auto flex flex-col items-center gap-8 lg:gap-10"

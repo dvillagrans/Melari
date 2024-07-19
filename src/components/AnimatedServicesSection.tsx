@@ -49,7 +49,7 @@ export const AnimatedServicesSection: React.FC<AnimatedServicesSectionProps> = (
   return (
     <section 
       ref={sectionRef}
-      className="lg:max-w-[1200px] flex flex-col gap-8 lg:gap-10 lg:flex-row px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[200px] justify-between"
+      className="lg:max-w-[1200px] flex flex-col gap-8 lg:gap-10 lg:flex-row px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[100px] justify-between"
     >
       {services.map((service, index) => (
         <div 
