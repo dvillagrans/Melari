@@ -1,0 +1,281 @@
+---
+import MainLayout from "../layouts/main-layout.astro";
+import Button from "../components/button.tsx";
+import CallIcon from "../icons/call.tsx";
+import { AnimatedServicesSection } from "../components/AnimatedServicesSection";
+import { AnimatedVideoSection } from "../components/AnimatedVideoSection";
+import { AnimatedExperienceSection } from "../components/AnimatedExperienceSection";
+import { AnimatedProjectsSection } from "../components/AnimatedProjectsSection";
+
+const services = [
+  {
+    img: "/Service1.png",
+    title: "Relajación Suprema",
+    text: "Nuestros tratamientos especializados y entorno tranquilo te ayudarán a aliviar el estrés y recargar energías.",
+  },
+  {
+    img: "/Service2.png",
+    title: "Renovación de la Piel",
+    text: "Nuestros servicios de cuidado de la piel utilizan técnicas avanzadas y productos de alta calidad para realzar tu belleza natural.",
+  },
+  {
+    img: "/Service3.png",
+    title: "Bienestar Interior",
+    text: "Ofrecemos terapias holísticas que equilibran cuerpo y mente, promoviendo un estado de paz y armonía.",
+  },
+];
+
+const reviews = [
+  {
+    img: "/natasha.png",
+    name: "Nattasha Mith",
+    location: "Sydney, USA",
+    review:
+      "Lorem Ipsum is simply dummy text of the typesetting industry. Ipsum has been.",
+  },
+  {
+    img: "/Raul.jpg",
+    name: "RAÚL MAGAÑA",
+    location: "Sydney, New York",
+    review:
+      "Lorem Ipsum is simply dummy text of the typesetting industry. Ipsum has been.",
+  },
+  {
+    img: "/raymond.png",
+    name: "Raymond Galario",
+    location: "Sydney, Australia",
+    review:
+      "Lorem Ipsum is simply dummy text of the typesetting industry. Ipsum has been.",
+  },
+];
+
+const projects = [
+  {
+    img: "/project1.jpg",
+    name: "Modern Kitchen",
+    text: "Decor / Artchitecture",
+  },
+  {
+    img: "/project2.jpg",
+    name: "Modern Bedroom",
+    text: "Decor / Artchitecture",
+  },
+  {
+    img: "/project3.jpg",
+    name: "Modern Dining Hall",
+    text: "Decor / Artchitecture",
+  },
+  {
+    img: "/project4.jpg",
+    name: "Modern Living Room",
+    text: "Decor / Artchitecture",
+  },
+];
+
+const experiences = [
+  {
+    text: "Años de Experiencia",
+    num: 12,
+  },
+  {
+    text: "Clientes Felices",
+    num: 3000,
+  },
+  {
+    text: "Servicios Ofrecidos",
+    num: 30,
+  },
+];
+---
+
+<MainLayout title="Melari Spa">
+  <!-- Banner -->
+
+  <section
+    class="w-full bg-hero bg-no-repeat bg-cover h-screen lg:min-h-[110vh] px-12 xl:px-0 flex items-center"
+  >
+    <div class="lg:max-w-[1200px] w-full mx-auto flex flex-col">
+      <h1
+        class="text-[40px] leading-[50px] md:text-[60px] xl:text-[85px] pb-4 font-dm md:leading-[106.25px] w-full xl:max-w-[50%] text-primary-200 text-white"
+      >
+        SPA & TERAPIA ALTERNATIVA
+      </h1>
+      <p
+        class="text-base md:text-[22px] pb-5 font-jost text-white w-full lg:max-w-[50%]"
+      >
+        En cada rincón de nuestro spa, encontrarás un refugio de calma y
+        armonía. Cada detalle ha sido cuidadosamente diseñado para ofrecerte una
+        experiencia única.
+      </p>
+      <Button text="Agendar una cita" />
+    </div>
+  </section>
+
+  <!-- Services Section -->
+
+  <AnimatedServicesSection services={services} client:load />
+
+  <!-- About Section -->
+
+  <section
+    class="w-full lg:max-w-[1200px] mx-auto px-12 xl:px-0 flex flex-col-reverse justify-center items-center lg:grid grid-cols-2 gap-[75px] pt-[100px] lg:pt-[200px]"
+  >
+    <div
+      class="flex flex-col gap-8 max-w-[472px] items-center lg:items-start py-6"
+    >
+      <h2
+        class="text-[30px] text-center capitalize lg:text-left font-dm tracking-wide leading-8 md:leading-[62.50px] md:text-[50px] text-text-blue"
+      >
+        SPA Profesional & Servicios de Cuidado Personal
+      </h2>
+      <p
+        class="text-base md:text-[22px] text-center lg:text-left tracking-tight font-jost text-text-gray leading-[33px]"
+      >
+        En Melari, nos enorgullecemos de ser el mejor spa y proveedor de
+        servicios de cuidado personal. Nuestra dedicación a la excelencia y el
+        bienestar de nuestros clientes nos distingue. Con una amplia gama de
+        tratamientos y terapias, ofrecemos una experiencia única que
+        transformará tu cuerpo y mente.
+      </p>
+      <div class="flex gap-4 pt-3 items-center">
+        <CallIcon />
+        <p class="flex flex-col text-text-gray-200 font-jost tracking-tight">
+          <span class="text-2xl font-bold leading-9">55-8354-1965</span>
+          <span class="text-[22px] leading-8">Llamanos a cualquier hora</span>
+        </p>
+      </div>
+      <Button text="Agenda una cita" />
+    </div>
+
+    <div>
+      <img src="/about.webp" alt="" />
+    </div>
+  </section>
+
+  <!--Video Section -->
+
+  <AnimatedVideoSection
+    title="Conoce nuestras instalaciones y déjate consentir"
+    videoSrc="/about.mp4"
+    client:load
+  />
+
+  <!-- What People Think About Us Section -->
+
+  <section
+    class="lg:max-w-[1200px] px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[200px]"
+  >
+    <div
+      class="w-full flex flex-col bg-primary-300 rounded-[48px] px-6 py-[88px]"
+    >
+      <h2
+        class="font-dm tracking-wide text-center leading-[37px] lg:leading-[62.50px] text-[30px] lg:text-[50px] w-full lg:max-w-[50%] pb-9 mx-auto"
+      >
+        Lo que las personas piensan de nosotros
+      </h2>
+      <div class="flex flex-col gap-8 lg:gap-10 lg:flex-row justify-between">
+        {
+          reviews.map((rev) => {
+            return (
+              <div class="w-full bg-white max-w-[370px] px-[37px] py-[53px] rounded-3xl mx-auto flex flex-col justify-center gap-4 md:gap-6">
+                <div class="flex flex-col sm:flex-row gap-6 items-center">
+                  <img src={rev.img} alt="" />
+                  <p class="flex flex-col tracking-tight leading-9">
+                    <span class="text-primary-200 text-lg lg:text-[25px] font-dm">
+                      {rev.name}
+                    </span>
+                    <span class="text-text-gray-200 text-base lg:text-lg font-jost">
+                      {rev.location}
+                    </span>
+                  </p>
+                </div>
+                <p class="font-jost tracking-tight leading-8 text-base text-center sm:text-left text-text-gray lg:text-[22px]">
+                  {rev.review}
+                </p>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+
+  <AnimatedProjectsSection projects={projects} />
+
+  <!-- Experience Section -->
+  <AnimatedExperienceSection experiences={experiences} client:load />
+
+  <!-- google maps direcction -->
+  <section
+    class="w-full lg:max-w-[1200px] px-12 xl:px-0 mx-auto pt-[100px] lg:pt-[200px]"
+  >
+    <h2
+      class="font-dm tracking-wide text-center leading-[37px] lg:leading-[62.50px] text-[30px] lg:text-[50px] w-full lg:max-w-[50%] pb-2 mx-auto"
+    >
+      Ubicación
+    </h2>
+    <div class="grid grid-cols-2 gap-4 w-full h-[500px] lg:h-[600px]">
+      <!-- information in the first column -->
+      <div class="flex flex-col gap-4 justify-center items-center">
+        <h2 class="font-dm text-[30px] text-text-blue">
+          Que estas esperando para…
+        </h2>
+        <h1 class="font-dm text-[50px] text-primary-200">
+          Sentirte en el cielo
+        </h1>
+        <p class="text-text-gray-200 font-jost text-base">
+          <span class="font-bold">Dirección:</span> Santa Anita 364, Evolucion, Nezahualcóyotl,
+          Estado de México
+        </p>
+        <p class="text-text-gray-200 font-jost text-base">
+          <span class="font-bold">Teléfono:</span> 55-8354-1965
+        </p>
+        <p class="text-text-gray-200 font-jost text-base">
+          <span class="font-bold">Horario:</span>
+          Lun-Vie : 8:00 am – 7:00 pm <br />
+          &emsp;&emsp;&emsp;&emsp; Sabados : 8:00 am -1:00 pm hrs.
+        </p>
+      </div>
+
+      <!-- google maps in the second column -->
+      <div class="grid grid-cols-1 h-full">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235.20794098462065!2d-99.01667146606853!3d19.39826993992335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2aac5e41083a1423%3A0xcda09ac42c85f4fd!2sMELARI!5e0!3m2!1ses!2smx!4v1720114729449!5m2!1ses!2smx"
+          ,
+          width="600"
+          height="450"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          class="w-full h-full"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: translateX(-100vw);
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateX(0);
+      transition: all 0.5s ease;
+    }
+  </style>
+</MainLayout>
