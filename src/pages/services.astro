@@ -1,49 +1,93 @@
 ---
+import { AnimatedProjectsSection } from "../components/AnimatedProjectsSection";
 import MainLayout from "../layouts/main-layout.astro";
-import Service1 from "../icons/service1.tsx";
-import Service2 from "../icons/service2.tsx";
-import Service3 from "../icons/service3.tsx";
-import Service4 from "../icons/service4.tsx";
-import Service5 from "../icons/service5.tsx";
-import Service6 from "../icons/service6.tsx";
 
-const services = [
+const projects = [
   {
-    title: "Project Plan",
-    text: "There are many variations of the passages of lorem Ipsum from available, majority.",
-    icon: Service1,
+    img: "/project1.jpg",
+    name: "Ventosas Terapéuticas",
+    text: "Ayuda a aliviar el dolor y la tensión muscular.",
   },
   {
-    title: "Interior Work",
-    text: "There are many variations of the passages of lorem Ipsum from available, majority.",
-    icon: Service2,
+    img: "/project2.jpg",
+    name: "Masajes Relajantes",
+    text: "Ayuda a aliviar el estrés y la ansiedad.",
   },
   {
-    title: "Realization",
-    text: "There are many variations of the passages of lorem Ipsum from available, majority.",
-    icon: Service3,
+    img: "/project3.jpg",
+    name: "Faciales de Lujo",
+    text: "Tratamientos de belleza para una piel radiante.",
   },
   {
-    title: "2d/3d Art Work",
-    text: "There are many variations of the passages of lorem Ipsum from available, majority.",
-    icon: Service4,
+    img: "/project4.jpg",
+    name: "Faciales Hidratantes",
+    text: "Hidratación profunda para una piel suave y tersa.",
   },
   {
-    title: "Retail design",
-    text: "There are many variations of the passages of lorem Ipsum from available, majority.",
-    icon: Service5,
+    img: "/project5.jpg",
+    name: "Masajes Descontracturantes",
+    text: "Alivio del dolor y la tensión muscular para una sensación de bienestar.",
   },
   {
-    title: "Decoration Work",
-    text: "There are many variations of the passages of lorem Ipsum from available, majority.",
-    icon: Service6,
+    img: "/project6.jpg",
+    name: "Masajes Reductores",
+    text: "Masajes para reducir la grasa localizada y mejorar la circulación sanguínea.",
+  },
+  {
+    img: "/project7.jpg",
+    name: "Masajes Teraupéticos",
+    text: "Masajes para aliviar dolores musculares y tensiones.",
+  },
+  {
+    img: "/project8.jpg",
+    name: "Terapias Rehabilitadoras",
+    text: "Terapias para recuperar la movilidad y la fuerza muscular.",
+  },
+  {
+    img: "/project9.jpg",
+    name: "Terapias Con Ventosas",
+    text: "Terapias para aliviar el dolor y la tensión muscular.",
+  },
+  {
+    img: "/project10.jpg",
+    name: "Terapias Con Acupuntura",
+    text: "Terapias para aliviar el dolor y mejorar la salud.",
+  },
+  {
+    img: "/project11.jpg",
+    name: "Terapias Carboxiterapia",
+    text: "Terapias para mejorar la circulación y reducir la celulitis.",
+  },
+  {
+    img: "/project12.jpg",
+    name: "Terapias Conoterapia",
+    text: "Terapias para mejorar la circulación y reducir la celulitis.",
+  },
+  {
+    img: "/project13.jpg",
+    name: "Nutrición y Dietética",
+    text: "Asesoramiento nutricional para mejorar la salud y el bienestar.",
+  },
+  {
+    img: "/project14.jpg",
+    name: "Limpieza Facial",
+    text: "Tratamientos de belleza para una piel radiante y saludable.",
+  },
+  {
+    img: "/project15.jpg",
+    name: "Hidratacion Facial",
+    text: "Tratamientos de belleza para una piel suave y tersa.",
+  },
+  {
+    img: "/project16.jpg",
+    name: "Depilacion Con Laser",
+    text: "Depilación definitiva para una piel suave y sin vello.",
   },
 ];
 ---
 
 <MainLayout title="Melari Spa">
   <!-- Banner Section -->
-
   <section class="w-full bg-services h-[50vh] flex justify-center items-end">
     <div
       class="py-[30px] lg:py-[41px] px-[60px] lg:px-[152px] flex flex-col justify-center items-center bg-white rounded-tl-[37px] rounded-tr-[37px] gap-2.5"
@@ -62,8 +106,7 @@ const services = [
   </section>
 
   <!-- Services Section -->
-
-  <!-- Inner Sections End -->
+  <AnimatedProjectsSection projects={projects} />
 </MainLayout>
 
 <style>

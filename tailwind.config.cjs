@@ -6,9 +6,11 @@ module.exports = {
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
 	theme: {
 		extend: {
+			backgroundColor: {
+				main: "#ffffff",
+			},
 			backgroundImage: {
 				hero: "url('/banner.webp')",
-				main: "url('/Background.jpg')",
 				about: "url('/aboutpage-bg.jpg')",
 				services: "url('/servicespage-bg.jpg')",
 				contact: "url('/contactpage-bg.jpg')",

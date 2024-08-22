@@ -58,13 +58,13 @@ const Navbar = () => {
 
         <nav className={`flex flex-row gap-8 items-center ${isMobileMenuOpen ? "flex" : "hidden"} md:flex`}>
           <a href="/" className={`${linkStyle} md:text-lg`}>
-            HOME
+            INICIO
           </a>
           <a href="/about" className={`${linkStyle} md:text-lg`}>
-            ABOUT
+            SOBRE NOSOTROS
           </a>
           <a href="/services" className={`${linkStyle} md:text-lg`}>
-            SERVICES
+            SERVICIOS
           </a>
         </nav>
       </div>
