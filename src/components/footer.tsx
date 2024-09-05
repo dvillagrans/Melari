@@ -75,13 +75,10 @@ const Footer = () => {
           </h5>
           <div className="flex flex-col gap-6">
             <p className="tracking-tight text-base lg:text-[22px] lg:leading-[33px] font-jost text-text-gray">
-            Santa Anita 364, Evolucion, Nezahualcóyotl, Estado de México
             </p>
             <p className="tracking-tight text-base lg:text-[22px] lg:leading-[33px] font-jost text-text-gray">
-            melaribusiness@gmail.com
             </p>
             <p className="tracking-tight text-base lg:text-[22px] lg:leading-[33px] font-jost text-text-gray">
-              55-8354-1965
             </p>
           </div>
         </div>

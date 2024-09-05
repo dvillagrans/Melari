@@ -16,16 +16,15 @@ const MapsSection: React.FC = () => {
                         Sentirte en el cielo
                     </h1>
                     <p className="text-text-gray-200 font-jost text-base text-center">
-                        <span className="font-bold">Dirección:</span> Santa Anita 364, Evolución, Nezahualcóyotl,
-                        Estado de México
+                        <span className="font-bold">Dirección:</span> 
                     </p>
                     <p className="text-text-gray-200 font-jost text-base text-center">
-                        <span className="font-bold">Teléfono:</span> 55-8354-1965
+                        <span className="font-bold">Teléfono:</span> 
                     </p>
                     <p className="text-text-gray-200 font-jost text-base text-center">
                         <span className="font-bold">Horario:</span>
-                        Lun-Vie : 8:00 am – 7:00 pm <br />
-                        &emsp;&emsp;&emsp;&emsp; Sábados : 8:00 am -1:00 pm hrs.
+                        <br />
+                        &emsp;&emsp;&emsp;&emsp; 
                     </p>
                 </div>
 
