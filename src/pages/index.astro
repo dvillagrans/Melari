@@ -118,18 +118,40 @@ const experiences = (
   <!-- About Section -->
 
   <section
-    class="w-full lg:max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 flex flex-col-reverse justify-center items-center lg:grid grid-cols-2 gap-[75px] pt-[100px] lg:pt-[200px]"
+    class="w-full lg:max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 pt-[100px] lg:pt-[150px] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-0"
   >
-    <div
-      class="flex flex-col gap-8 max-w-[472px] items-center lg:items-start py-6"
-    >
-      <h2
-        class="text-[30px] text-center capitalize lg:text-left font-dm tracking-wide leading-8 md:leading-[62.50px] md:text-[50px] text-text-blue"
+    <div class="lg:col-span-5 relative">
+      <figure class="paper-frame rounded-card overflow-hidden">
+        <img
+          src="/about.webp"
+          alt=""
+          width={4196}
+          height={6294}
+          loading="lazy"
+          decoding="async"
+          class="w-full aspect-[3/4] object-cover"
+        />
+      </figure>
+      <div
+        class="hidden lg:block absolute -right-6 -bottom-8 bg-ink text-white px-7 py-5 rounded-lg border border-white/10"
       >
-        SPA Profesional & Servicios de Cuidado Personal
+        <span class="block font-dm text-[28px] leading-none text-primary-100">Melari</span>
+        <span class="block mt-1 eyebrow text-white/60">Spa &amp; Terapia</span>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6 lg:col-start-7 flex flex-col justify-center lg:py-6">
+      <p class="eyebrow text-accent flex items-center gap-4">
+        <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
+        Sobre nosotros
+      </p>
+      <h2
+        class="mt-5 font-dm text-[34px] leading-[1.1] md:text-[46px] text-ink max-w-[20ch]"
+      >
+        SPA Profesional &amp; Servicios de Cuidado Personal
       </h2>
       <p
-        class="text-base md:text-[22px] text-center lg:text-left tracking-tight font-jost text-text-gray leading-[33px]"
+        class="mt-7 font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[54ch]"
       >
         En Melari, nos enorgullecemos de ser el mejor spa y proveedor de
         servicios de cuidado personal. Nuestra dedicación a la excelencia y el
@@ -137,26 +159,18 @@ const experiences = (
         tratamientos y terapias, ofrecemos una experiencia única que
         transformará tu cuerpo y mente.
       </p>
-      <div class="flex gap-4 pt-3 items-center">
+
+      <div class="mt-9 flex items-center gap-5">
         <CallIcon />
-        <p class="flex flex-col text-text-gray-200 font-jost tracking-tight">
-          <span class="text-[22px] leading-8">Llámanos a cualquier hora</span>
+        <p class="flex flex-col text-ink-soft font-jost tracking-tight">
+          <span class="text-[18px] leading-7">Llámanos a cualquier hora</span>
         </p>
       </div>
-      <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
-      <Button text="Agenda una cita" href="/contact" />
-    </div>
 
-    <div>
-      <img
-        src="/about.webp"
-        alt=""
-        width={4196}
-        height={6294}
-        loading="lazy"
-        decoding="async"
-        class="w-full h-auto"
-      />
+      <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
+      <div class="mt-9">
+        <Button text="Agenda una cita" href="/contact" />
+      </div>
     </div>
   </section>
 
