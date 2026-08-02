@@ -82,30 +82,33 @@ const Navbar = () => {
   const headerClass = [
     "fixed inset-x-0 top-0 z-50",
     isScrolled
-      ? "bg-text-blue/85 backdrop-blur-md shadow-lg shadow-black/10"
+      ? "bg-ink/90 backdrop-blur-md border-b border-white/10"
       : "bg-transparent",
-    "motion-safe:transition-[background-color,box-shadow] motion-safe:duration-300",
+    "motion-safe:transition-[background-color,border-color,box-shadow] motion-safe:duration-300",
     "motion-reduce:transition-none",
   ].join(" ");
 
-  const desktopLinkClass =
-    "text-sm font-normal text-white hover:text-primary-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
+  const desktopLinkClass = [
+    "text-sm font-normal tracking-[0.06em] text-white/90",
+    "link-draw hover:text-white",
+    "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
+  ].join(" ");
 
   const mobileLinkClass =
-    "py-3 text-lg font-normal text-white hover:text-primary-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+    "py-3 text-lg font-normal text-white/90 hover:text-primary-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
   const ctaClass =
-    "rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+    "rounded-full border border-white/25 px-6 py-2.5 text-sm font-semibold tracking-[0.04em] text-white transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
   return (
     <header className={headerClass}>
       <div className="relative max-w-[1200px] m-auto w-full px-5 md:px-12">
-        <div className="flex justify-between items-center py-4 md:py-6">
+        <div className="flex justify-between items-center py-4 md:py-5">
           <a href="/" className="shrink-0" aria-label="Melari Spa — Inicio">
             <Logo />
           </a>
 
-          <nav className="hidden md:flex flex-row gap-8 items-center" aria-label="Principal">
+          <nav className="hidden md:flex flex-row gap-9 items-center" aria-label="Principal">
             {NAV_LINKS.map(({ href, label }) => (
               <a key={href} href={href} className={desktopLinkClass}>
                 {label}
@@ -150,7 +153,7 @@ const Navbar = () => {
           ref={mobileMenuRef}
           aria-label="Menú"
           className={[
-            "md:hidden absolute top-full left-0 right-0 flex flex-col gap-1 bg-text-blue/95 backdrop-blur-md shadow-lg shadow-black/10 px-5 md:px-12 py-6",
+            "md:hidden absolute top-full left-0 right-0 flex flex-col gap-1 bg-ink/95 backdrop-blur-md px-5 md:px-12 py-6",
             "motion-safe:transition-[opacity,visibility] motion-safe:duration-300 ease-out",
             "motion-reduce:transition-none",
             isMobileMenuOpen
