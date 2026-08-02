@@ -97,8 +97,8 @@ const experiences = (
 
       <!-- Editorial framed photograph, offset into the right column. -->
       <div class="md:col-span-5 relative hidden md:block md:py-28">
-        <figure class="hero-item paper-frame rounded-card overflow-hidden group" style="--d: 200ms">
-          <div class="overflow-hidden">
+        <figure class="hero-item paper-frame rounded-card group relative" style="--d: 200ms">
+          <div class="overflow-hidden rounded-card">
             <img
               src="/banner.webp"
               alt=""
@@ -109,15 +109,15 @@ const experiences = (
               class="w-full aspect-[4/5] object-cover transition-transform duration-700 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
             />
           </div>
+          <figcaption
+            class="absolute -bottom-8 left-8 right-auto bg-ink px-6 py-4 border border-white/10 rounded-lg"
+          >
+            <span class="eyebrow text-white/60">Refugio de calma</span>
+            <span class="block mt-1 font-jost text-sm text-white/85">
+              Diseñado para cuerpo y mente
+            </span>
+          </figcaption>
         </figure>
-        <figcaption
-          class="absolute -bottom-8 left-8 right-auto bg-ink px-6 py-4 border border-white/10 rounded-lg"
-        >
-          <span class="eyebrow text-white/60">Refugio de calma</span>
-          <span class="block mt-1 font-jost text-sm text-white/85">
-            Diseñado para cuerpo y mente
-          </span>
-        </figcaption>
 
         <!-- Rotating editorial badge -->
         <div class="absolute -right-8 -top-10 hidden xl:block" aria-hidden="true">

@@ -17,21 +17,24 @@ const Footer = () => {
               personas, ofreciendo servicios de calidad y con los mejores
               productos del mercado.
             </p>
-            <div className="flex gap-4">
-              <a
-                href="/"
-                aria-label="Facebook de Melari Spa"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-              >
-                <Facebook />
-              </a>
-              <a
-                href="/"
-                aria-label="Instagram de Melari Spa"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-              >
-                <Instagram />
-              </a>
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-4">
+                <span
+                  aria-hidden="true"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/45"
+                >
+                  <Facebook />
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/45"
+                >
+                  <Instagram />
+                </span>
+              </div>
+              <p className="font-jost text-xs tracking-tight text-white/40">
+                Redes sociales: pendiente de verificación
+              </p>
             </div>
           </div>
 
