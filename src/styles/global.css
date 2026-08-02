@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* Design tokens migrated from tailwind.config.cjs (Tailwind v3 -> v4).
+ *
+ * Tailwind v4 replaces the JS config theme with CSS variables under
+ * @theme. Namespaces: --color-* (colors), --font-* (font families),
+ * --background-image-* (bg-<name>), --shadow-* (box-shadow),
+ * --radius-* (border-radius), --ease-* (transition timing). */
+
+@theme {
+  --color-main: #ffffff;
+
+  --color-primary-100: #04acbc;
+  --color-primary-200: #04acbc;
+  --color-primary-300: #b4cccc;
+  --color-primary-400: #b4cccc;
+  --color-primary-500: #0e8491;
+  --color-primary-600: #39676b;
+
+  --color-text-blue: #1b2534;
+  --color-text-gray: #4d4f52;
+  --color-text-gray-100: #5f5f5f;
+  --color-text-gray-200: #4d5053;
+  --color-text-gray-300: #e5e5e5;
+
+  --color-accent: #04acbc;
+  --color-accent-dark: #0891a1;
+  --color-accent-soft: #b4cccc;
+
+  --color-surface: #b4cccc;
+  --color-surface-dark: #9cb8b8;
+
+  --font-dm: "DM Serif Display", serif;
+  --font-jost: "Jost", sans-serif;
+
+  --background-image-hero: url("/banner.webp");
+  --background-image-about: url("/aboutpage-bg.jpg");
+  --background-image-services: url("/servicespage-bg.jpg");
+  --background-image-contact: url("/servicespage-bg.jpg");
+
+  --shadow-card: 0 18px 40px -20px rgba(27, 37, 52, 0.18);
+  --shadow-lift: 0 28px 56px -16px rgba(27, 37, 52, 0.24);
+
+  --radius-card: 1.25rem;
+
+  --ease-out-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Custom utilities previously provided by the tailwind.config.cjs plugin. */
+@utility center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@utility startCenter {
+  display: flex;
+  align-items: center;
+}
+
+@utility btwn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Reveal animation fallback.
+ *
+ * Los elementos con .reveal-init solo se ocultan cuando JavaScript está
+ * activo (html.js) y el usuario prefiere movimiento. Sin JavaScript el
+ * contenido es visible de inmediato, y con prefers-reduced-motion se fuerza
+ * visible sin transición: nunca queda contenido permanentemente oculto. */
+
+html.js .reveal-init {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+html.js .revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal-init,
+  html.js .revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

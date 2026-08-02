@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Experience } from './experience'; 
+import { Experience } from './experience';
+import { usePrefersReducedMotion } from '../lib/usePrefersReducedMotion';
 
 interface ExperienceItem {
   text: string;
@@ -13,8 +14,14 @@ interface AnimatedExperienceSectionProps {
 export const AnimatedExperienceSection: React.FC<AnimatedExperienceSectionProps> = ({ experiences }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -38,12 +45,12 @@ export const AnimatedExperienceSection: React.FC<AnimatedExperienceSectionProps>
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-primary-300 px-12 xl:px-0 mx-auto mt-[100px] lg:mt-[200px] py-[151px] lg:pt-[100px]"
+      className="w-full bg-primary-300 px-5 md:px-12 xl:px-0 mx-auto mt-[100px] lg:mt-[200px] py-[151px] lg:pt-[100px]"
     >
       <div className="w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row justify-center items-center gap-8">
         {experiences.map((exp, i) => (

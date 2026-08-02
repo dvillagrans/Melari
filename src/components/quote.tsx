@@ -1,4 +1,3 @@
-import React from "react";
 import RightPattern from "../icons/right-quote-pattern.tsx";
 import LeftPattern from "../icons/left-quote-pattern.tsx";
 import Quote from "../icons/quote.tsx";

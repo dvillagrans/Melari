@@ -12,6 +12,10 @@ export const Experience: React.FC<ExperienceProps> = ({ text, num, i, isVisible 
 
   useEffect(() => {
     if (isVisible) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setCount(num);
+        return;
+      }
       const duration = 2000; // Duración de la animación en milisegundos
       const steps = 60; // Número de pasos para la animación
       const increment = num / steps;
@@ -31,11 +35,11 @@ export const Experience: React.FC<ExperienceProps> = ({ text, num, i, isVisible 
   }, [isVisible, num]);
 
   return (
-    <div className={`flex flex-col items-center ${i !== 0 ? 'ml-[112px]' : ''}`}>
+    <div className={`flex flex-col items-center ${i !== 0 ? 'lg:ml-[112px]' : ''}`}>
       <h1 className="font-dm text-[60px] leading-[65px] text-primary-500">
       {count}
       </h1>
-      <p className="font-jost text-[1.5Arem] text-primary-600 w-[93px] text-center">
+      <p className="font-jost text-[1.5rem] text-primary-600 w-[93px] text-center">
         {text}
       </p>
     </div>

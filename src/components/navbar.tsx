@@ -1,42 +1,131 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Logo from "../icons/logo.tsx";
 
+const NAV_LINKS = [
+  { href: "/", label: "Inicio" },
+  { href: "/about", label: "Sobre nosotros" },
+  { href: "/services", label: "Servicios" },
+];
+
 const Navbar = () => {
-  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const linkStyle = "text-sm leading-10 font-normal text-white hover:text-primary-200 transition-colors size-100";
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      setIsNavbarVisible(scrollTop === 0);
+      setIsScrolled(window.scrollY > 16);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    toggleButtonRef.current?.focus();
   };
 
-  return (
-    <div className={`fixed top-0 left-0 right-0 z-50 bg-transparent ${isNavbarVisible ? "" : "hidden"}`}>
-      <div className="max-w-[1200px] px-4 md:px-12 m-auto w-full py-6 flex justify-between items-center">
-        <a href="/" className="flex-shrink-0">
-          <Logo />
-        </a>
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
 
-        <nav className="flex flex-row gap-8 items-center md:hidden">
-          <button onClick={toggleMobileMenu} className="text-white focus:outline-none">
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+    const menu = mobileMenuRef.current;
+    const items = menu?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    items?.[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMobileMenu();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const currentMenu = mobileMenuRef.current;
+      if (!currentMenu) return;
+      const focusable = currentMenu.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (!currentMenu.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const headerClass = [
+    "fixed inset-x-0 top-0 z-50",
+    isScrolled
+      ? "bg-text-blue/85 backdrop-blur-md shadow-lg shadow-black/10"
+      : "bg-transparent",
+    "motion-safe:transition-[background-color,box-shadow] motion-safe:duration-300",
+    "motion-reduce:transition-none",
+  ].join(" ");
+
+  const desktopLinkClass =
+    "text-sm font-normal text-white hover:text-primary-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
+
+  const mobileLinkClass =
+    "py-3 text-lg font-normal text-white hover:text-primary-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
+  const ctaClass =
+    "rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
+  return (
+    <header className={headerClass}>
+      <div className="relative max-w-[1200px] m-auto w-full px-5 md:px-12">
+        <div className="flex justify-between items-center py-4 md:py-6">
+          <a href="/" className="shrink-0" aria-label="Melari Spa — Inicio">
+            <Logo />
+          </a>
+
+          <nav className="hidden md:flex flex-row gap-8 items-center" aria-label="Principal">
+            {NAV_LINKS.map(({ href, label }) => (
+              <a key={href} href={href} className={desktopLinkClass}>
+                {label}
+              </a>
+            ))}
+            <a href="/contact" className={ctaClass}>
+              Agendar una cita
+            </a>
+          </nav>
+
+          <button
+            type="button"
+            ref={toggleButtonRef}
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            className="md:hidden text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               {isMobileMenuOpen ? (
                 <path
                   strokeLinecap="round"
@@ -54,21 +143,32 @@ const Navbar = () => {
               )}
             </svg>
           </button>
-        </nav>
+        </div>
 
-        <nav className={`flex flex-row gap-8 items-center ${isMobileMenuOpen ? "flex" : "hidden"} md:flex`}>
-          <a href="/" className={`${linkStyle} md:text-lg`}>
-            INICIO
-          </a>
-          <a href="/about" className={`${linkStyle} md:text-lg`}>
-            SOBRE NOSOTROS
-          </a>
-          <a href="/services" className={`${linkStyle} md:text-lg`}>
-            SERVICIOS
+        <nav
+          id="mobile-menu"
+          ref={mobileMenuRef}
+          aria-label="Menú"
+          className={[
+            "md:hidden absolute top-full left-0 right-0 flex flex-col gap-1 bg-text-blue/95 backdrop-blur-md shadow-lg shadow-black/10 px-5 md:px-12 py-6",
+            "motion-safe:transition-[opacity,visibility] motion-safe:duration-300 ease-out",
+            "motion-reduce:transition-none",
+            isMobileMenuOpen
+              ? "visible opacity-100"
+              : "invisible opacity-0 pointer-events-none",
+          ].join(" ")}
+        >
+          {NAV_LINKS.map(({ href, label }) => (
+            <a key={href} href={href} onClick={closeMobileMenu} className={mobileLinkClass}>
+              {label}
+            </a>
+          ))}
+          <a href="/contact" onClick={closeMobileMenu} className={`${ctaClass} mt-4 text-center`}>
+            Agendar una cita
           </a>
         </nav>
       </div>
-    </div>
+    </header>
   );
 };
 

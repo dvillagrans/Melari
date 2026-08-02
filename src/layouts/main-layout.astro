@@ -1,20 +1,41 @@
 ---
 import Navbar from "../components/navbar.tsx";
 import Footer from "../components/footer.tsx";
+import "../styles/global.css";
 
 export interface LayoutProps {
   title: string;
+  description?: string;
 }
 
+const DEFAULT_DESCRIPTION =
+  "Melari Spa y Terapia Alternativa — masajes, tratamientos faciales y terapias de bienestar para cuerpo y mente.";
+
 const { title } = Astro.props as LayoutProps;
+const description = Astro.props.description ?? DEFAULT_DESCRIPTION;
 ---
 
-<html lang="en">
+<html lang="es" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Interior Design Website Template" />
-    <meta title={title} />
+    <script is:inline>
+      document.documentElement.classList.remove("no-js");
+      document.documentElement.classList.add("js");
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Melari Spa" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/banner.webp" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="/banner.webp" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +45,7 @@ const { title } = Astro.props as LayoutProps;
     />
 
     <title>{title}</title>
-    <link rel="icon" href="/public/MELARIICON.jpg" />
+    <link rel="icon" href="/MELARIICON.jpg" />
   </head><body>
     <main class="bg-main bg-no-repeat bg-cover bg-center">
       <Navbar client:load />
@@ -37,7 +58,7 @@ const { title } = Astro.props as LayoutProps;
     >
       Copyright © MelariSpa | Designed by Diego Villagran
     </p>
-    <script src="//code.tidio.co/eytnto8chqpwuaglmim8cv0bmbotyvvp.js" async
+    <script src="//code.tidio.co/eytnto8chqpwuaglmim8cv0bmbotyvvp.js" is:inline async
     ></script>
   </body>
 </html>

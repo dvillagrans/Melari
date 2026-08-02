@@ -10,37 +10,31 @@ const MapsSection: React.FC = () => {
         {/* Información en la primera columna */}
         <div className="flex flex-col gap-4 justify-center items-center px-4">
           <h2 className="font-dm text-[24px] md:text-[30px] text-text-blue text-center">
-            Que estás esperando para…
+            Qué estás esperando para…
           </h2>
           <h1 className="font-dm text-[36px] md:text-[50px] text-primary-200 text-center">
             Sentirte en el cielo
           </h1>
           <p className="text-text-gray-200 font-jost text-base text-center">
-            <span className="font-bold">Dirección:</span>
+            <span className="font-bold">Dirección:</span> pendiente de
+            verificación
           </p>
           <p className="text-text-gray-200 font-jost text-base text-center">
-            <span className="font-bold">Teléfono:</span>
+            <span className="font-bold">Teléfono:</span> pendiente de
+            verificación
           </p>
           <p className="text-text-gray-200 font-jost text-base text-center">
-            <span className="font-bold">Horario:</span>
-            <br />
-            &emsp;&emsp;&emsp;&emsp;
+            <span className="font-bold">Horario:</span> pendiente de
+            verificación
           </p>
         </div>
 
         {/* Google Maps en la segunda columna */}
         <div className="flex justify-center items-center px-4">
-          <iframe
-            title="map"
-            /*src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235.20794098462065!2d-99.01667146606853!3d19.39826993992335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2aac5e41083a1423%3A0xcda09ac42c85f4fd!2sMELARI!5e0!3m2!1ses!2smx!4v1720114729449!5m2!1ses!2smx"*/
-            width="100%"
-            height="300"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            className="w-full h-full"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+          <div className="w-full h-[300px] lg:h-full flex items-center justify-center rounded-[20px] bg-primary-300 text-text-gray-200 font-jost text-base text-center px-6">
+            El mapa no está disponible por ahora: la ubicación está pendiente
+            de verificación.
+          </div>
         </div>
       </div>
     </div>
