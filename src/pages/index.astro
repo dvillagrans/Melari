@@ -51,53 +51,64 @@ const experiences = (
   <section
     class="hero relative w-full overflow-hidden bg-ink"
   >
+    <!-- Film grain texture -->
+    <div
+      aria-hidden="true"
+      class="hero-grain absolute inset-0"
+    ></div>
     <!-- Soft scrim only on the text side; the right column lets the
          photography breathe instead of flattening it under a gradient. -->
     <div
       aria-hidden="true"
-      class="absolute inset-0 bg-linear-to-r from-ink/90 via-ink/55 to-ink/10"
+      class="absolute inset-0 bg-linear-to-r from-ink/85 via-ink/40 to-ink/5"
     ></div>
     <div
       class="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-12 py-24 md:py-0 md:min-h-dvh grid grid-cols-1 md:grid-cols-12 items-center gap-12"
     >
-      <div class="md:col-span-7 flex flex-col items-start md:py-24">
+      <div class="md:col-span-7 flex flex-col items-start md:py-28">
         <p
-          class="eyebrow text-primary-100 mb-6 flex items-center gap-4"
+          class="hero-item eyebrow text-primary-100 mb-6 flex items-center gap-4"
+          style="--d: 0ms"
         >
           <span aria-hidden="true" class="inline-block h-px w-10 bg-primary-100/70"></span>
-          Melari Spa
+          Melari Spa · Estudio de bienestar
         </p>
         <h1
-          class="font-dm text-white text-[clamp(2.75rem,7vw,5.5rem)] leading-[1.04] max-w-[14ch]"
+          class="hero-item font-dm text-white text-[clamp(2.75rem,7vw,5.75rem)] leading-[1.02] max-w-[11ch]"
+          style="--d: 120ms"
         >
-          SPA &amp; TERAPIA ALTERNATIVA
+          SPA &amp; <em class="italic text-accent">Terapia</em><br />
+          Alternativa
         </h1>
-        <span aria-hidden="true" class="block h-px w-16 bg-primary-100/70 my-7"></span>
+        <span aria-hidden="true" class="hero-item block h-px w-16 bg-primary-100/70 my-7" style="--d: 240ms"></span>
         <p
-          class="font-jost text-white/85 text-base md:text-lg leading-relaxed md:leading-[30px] max-w-[46ch]"
+          class="hero-item font-jost text-white/85 text-base md:text-lg leading-relaxed md:leading-[30px] max-w-[46ch]"
+          style="--d: 360ms"
         >
           En cada rincón de nuestro spa, encontrarás un refugio de calma y
           armonía. Cada detalle ha sido cuidadosamente diseñado para ofrecerte
           una experiencia única.
         </p>
         <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
-        <div class="mt-9">
+        <div class="hero-item mt-9" style="--d: 480ms">
           <Button text="Agendar una cita" href="/contact" />
         </div>
       </div>
 
       <!-- Editorial framed photograph, offset into the right column. -->
-      <div class="md:col-span-5 relative hidden md:block md:py-24">
-        <figure class="paper-frame rounded-card overflow-hidden">
-          <img
-            src="/banner.webp"
-            alt=""
-            width={1280}
-            height={853}
-            loading="eager"
-            decoding="async"
-            class="w-full aspect-[4/5] object-cover"
-          />
+      <div class="md:col-span-5 relative hidden md:block md:py-28">
+        <figure class="hero-item paper-frame rounded-card overflow-hidden group" style="--d: 200ms">
+          <div class="overflow-hidden">
+            <img
+              src="/banner.webp"
+              alt=""
+              width={1280}
+              height={853}
+              loading="eager"
+              decoding="async"
+              class="w-full aspect-[4/5] object-cover transition-transform duration-700 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
+            />
+          </div>
         </figure>
         <figcaption
           class="absolute -bottom-8 left-8 right-auto bg-ink px-6 py-4 border border-white/10 rounded-lg"
@@ -107,7 +118,56 @@ const experiences = (
             Diseñado para cuerpo y mente
           </span>
         </figcaption>
+
+        <!-- Rotating editorial badge -->
+        <div class="absolute -right-8 -top-10 hidden xl:block" aria-hidden="true">
+          <div class="hero-badge relative h-32 w-32">
+            <svg viewBox="0 0 200 200" class="h-full w-full">
+              <defs>
+                <path
+                  id="hero-badge-circle"
+                  d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"
+                />
+              </defs>
+              <circle
+                cx="100"
+                cy="100"
+                r="99"
+                fill="#1b2534"
+                stroke="rgba(255,255,255,0.15)"
+                stroke-width="1"
+              />
+              <text
+                class="fill-white/90"
+                style="font-family: 'Jost', sans-serif; font-size: 12.5px; letter-spacing: 4px; font-weight: 500;"
+              >
+                <textPath href="#hero-badge-circle" startOffset="0">
+                  MELARI SPA · BIENESTAR · TERAPIA ·
+                </textPath>
+              </text>
+              <path
+                d="M100 76 l0 42 M84 102 l16 16 16-16"
+                stroke="#04acbc"
+                stroke-width="3"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div
+      class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-3"
+      aria-hidden="true"
+    >
+      <span class="eyebrow text-white/50">Scroll</span>
+      <span class="block h-10 w-px bg-white/25 overflow-hidden relative">
+        <span class="hero-scroll-line absolute inset-x-0 top-0 h-full bg-white/70"></span>
+      </span>
     </div>
   </section>
 
@@ -235,4 +295,83 @@ const experiences = (
 
   <!-- google maps direcction -->
   <MapsSection />
+
+  <style>
+    /* ==== Hero choreography ====
+       Elements fade + rise in sequence using --d (delay). Everything is
+       plain CSS so it works server-first with zero JS; reduced-motion
+       users get the fully visible, static composition. */
+
+    @keyframes hero-rise {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    html.js .hero-item {
+      opacity: 0;
+    }
+
+    .hero-item {
+      animation: hero-rise 900ms var(--ease-out-smooth) both;
+      animation-delay: var(--d, 0ms);
+    }
+
+    @keyframes hero-badge-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hero-badge svg {
+      animation: hero-badge-spin 22s linear infinite;
+    }
+
+    @keyframes hero-scroll-drop {
+      0% {
+        transform: translateY(-100%);
+      }
+      60% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    .hero-scroll-line {
+      animation: hero-scroll-drop 2.2s ease-in-out infinite;
+    }
+
+    /* Film grain: a tiny, tiled noise overlay at very low opacity so it
+       reads as texture, not a filter. */
+    .hero-grain {
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js .hero-item {
+        opacity: 1;
+        animation: none;
+      }
+
+      .hero-badge svg,
+      .hero-scroll-line {
+        animation: none;
+      }
+
+      .hero-scroll-line {
+        transform: translateY(0);
+      }
+    }
+  </style>
 </MainLayout>
