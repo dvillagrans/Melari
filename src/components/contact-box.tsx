@@ -2,41 +2,58 @@ import Mail from "../icons/mail.tsx";
 import Phone from "../icons/phone.tsx";
 import Web from "../icons/web.tsx";
 
+const items = [
+  {
+    icon: <Mail />,
+    label: "Correo",
+    value: "pendiente de verificación",
+  },
+  {
+    icon: <Phone />,
+    label: "Teléfono",
+    value: "pendiente de verificación",
+  },
+  {
+    icon: <Web />,
+    label: "Sitio web",
+    value: "pendiente de verificación",
+  },
+];
+
 const ContactInfo = () => {
   return (
-    <div className="col-span-1 bg-ink rounded-card px-8 py-12 md:py-16 flex flex-col gap-8 w-full text-white">
-      <h2 className="eyebrow text-white/50">Información de contacto</h2>
-
-      <div className="flex flex-col gap-6">
-        <p className="flex flex-col md:flex-row gap-4 items-start md:items-center font-jost text-base tracking-tight text-white/85">
-          <span className="shrink-0">
-            <Mail />
-          </span>
-          <span>
-            Correo: <span className="text-white/50">pendiente de verificación</span>
-          </span>
-        </p>
-        <p className="flex flex-col md:flex-row gap-4 items-start md:items-center font-jost text-base tracking-tight text-white/85">
-          <span className="shrink-0">
-            <Phone />
-          </span>
-          <span>
-            Teléfono: <span className="text-white/50">pendiente de verificación</span>
-          </span>
-        </p>
-        <p className="flex flex-col md:flex-row gap-4 items-start md:items-center font-jost text-base tracking-tight text-white/85">
-          <span className="shrink-0">
-            <Web />
-          </span>
-          <span>
-            Sitio web: <span className="text-white/50">pendiente de verificación</span>
-          </span>
+    <div className="w-full flex flex-col gap-4">
+      <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-4">
+        <div>
+          <p className="eyebrow text-primary-100 flex items-center gap-4">
+            <span aria-hidden="true" className="inline-block h-px w-10 bg-primary-100/60"></span>
+            Información de contacto
+          </p>
+          <h2 className="mt-4 font-dm text-[28px] leading-[1.12] md:text-[36px] text-white max-w-[18ch]">
+            Estamos aquí para ti
+          </h2>
+        </div>
+        <p className="font-jost text-sm leading-[22px] text-white/40 max-w-[30ch]">
+          Los datos de contacto se publicarán en cuanto estén verificados.
         </p>
       </div>
 
-      <p className="font-jost text-sm leading-[22px] text-white/40 border-t border-white/10 pt-6">
-        Los datos de contacto se publicarán en cuanto estén verificados.
-      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+        {items.map(({ icon, label, value }) => (
+          <div
+            key={label}
+            className="flex flex-col gap-4 rounded-card border border-white/10 bg-white/[0.04] px-6 py-7"
+          >
+            <span className="shrink-0 text-white/80">{icon}</span>
+            <div>
+              <h3 className="eyebrow text-white/40">{label}</h3>
+              <p className="mt-2 font-jost text-base leading-[24px] text-white/60">
+                {value}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
