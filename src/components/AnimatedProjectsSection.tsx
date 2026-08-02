@@ -26,7 +26,7 @@ const ProjectCardMedia: React.FC<{ proj: Project }> = ({ proj }) => (
       height={853}
       loading="lazy"
       decoding="async"
-      className="w-full aspect-[4/3] object-cover transition-transform duration-500 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
+      className="w-full aspect-[16/10] object-cover transition-transform duration-500 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
     />
   </>
 );
@@ -53,41 +53,37 @@ export const AnimatedProjectsSection: React.FC<AnimatedProjectsSectionProps> = (
         </div>
       </div>
 
-      {/* Editorial alternation: every other card drops down and sits off
-          the baseline for a magazine-like rhythm. */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-10 lg:gap-y-[72px] mt-12 lg:mt-16">
-        {projects.map((proj, index) => {
-          const offset = index % 2 === 1 ? 'md:mt-16' : '';
-          return (
-            <a
-              key={proj.name}
-              href={proj.href ?? '/services'}
-              className={`group relative block ${offset} rounded-card overflow-hidden paper-frame
+      {/* Balanced 2-column grid on one baseline. */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-10 lg:gap-y-[56px] mt-12 lg:mt-16">
+        {projects.map((proj) => (
+          <a
+            key={proj.name}
+            href={proj.href ?? '/services'}
+            className={`group relative block rounded-card overflow-hidden paper-frame
                           focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent`}
-            >
-              <div className="overflow-hidden">
-                <ProjectCardMedia proj={proj} />
+          >
+            <div className="overflow-hidden">
+              <ProjectCardMedia proj={proj} />
+            </div>
+            <div className="p-6 md:p-7 flex items-start justify-between gap-6">
+              <div>
+                <h3 className="font-dm text-[22px] md:text-[26px] leading-snug text-ink">
+                  {proj.name}
+                </h3>
+                <p className="mt-2 font-jost text-base leading-[26px] text-ink-soft">
+                  {proj.text}
+                </p>
               </div>
-              <div className="p-6 md:p-7 flex items-start justify-between gap-6">
-                <div>
-                  <h3 className="font-dm text-[22px] md:text-[26px] leading-snug text-ink">
-                    {proj.name}
-                  </h3>
-                  <p className="mt-2 font-jost text-base leading-[26px] text-ink-soft">
-                    {proj.text}
-                  </p>
-                </div>
-                <span
-                  className="mt-1 inline-flex shrink-0 items-center gap-2 font-jost text-sm font-semibold uppercase tracking-widest
-                             text-accent transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
-                  aria-hidden="true"
-                >
-                  <Arrow />
-                </span>
-              </div>
-            </a>
-          );
-        })}
+              <span
+                className="mt-1 inline-flex shrink-0 items-center gap-2 font-jost text-sm font-semibold uppercase tracking-widest
+                           text-accent transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+                aria-hidden="true"
+              >
+                <Arrow />
+              </span>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   );

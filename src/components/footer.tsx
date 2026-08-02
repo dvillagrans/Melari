@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-5 flex flex-col gap-7">
             <a href="/" className="inline-flex w-fit" aria-label="Melari Spa — Inicio">
-              <Logo />
+              <Logo className="h-12 w-auto md:h-14" />
             </a>
             <p className="tracking-tight text-base lg:text-[18px] lg:leading-[30px] font-jost text-white/60 max-w-[38ch]">
               Somos una SPA que se dedica a la belleza y el bienestar de las

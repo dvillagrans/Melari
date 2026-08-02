@@ -105,7 +105,7 @@ const Navbar = () => {
       <div className="relative max-w-[1200px] m-auto w-full px-5 md:px-12">
         <div className="flex justify-between items-center py-4 md:py-5">
           <a href="/" className="shrink-0" aria-label="Melari Spa — Inicio">
-            <Logo />
+            <Logo className="h-10 w-auto md:h-11" />
           </a>
 
           <nav className="hidden md:flex flex-row gap-9 items-center" aria-label="Principal">

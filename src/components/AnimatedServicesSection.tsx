@@ -83,17 +83,16 @@ export const AnimatedServicesSection: React.FC<AnimatedServicesSectionProps> = (
         </div>
       </div>
 
-      {/* Asymmetric staggered grid: the middle card drops down to build
-          rhythm; each card reveals in sequence (max 3 steps). */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 mt-12 lg:mt-16 items-start">
+      {/* Balanced 3-column grid: images stay compact (16:10), cards align
+          on the same baseline; reveal stagger is capped at 3 steps. */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 mt-10 lg:mt-14 items-start">
         {services.map((service, index) => {
-          const offset = index === 1 ? 'md:mt-16' : index === 2 ? 'md:mt-8' : '';
           const delay = { transitionDelay: `${index * 120}ms` };
           return (
             <article
               key={service.title}
               style={isVisible ? delay : undefined}
-              className={`md:col-span-4 flex flex-col ${offset}
+              className={`md:col-span-4 flex flex-col
                           transition-all duration-700 ease-out-smooth
                           ${isVisible ? 'revealed' : 'reveal-init'}
                           motion-reduce:transition-none`}
@@ -104,17 +103,17 @@ export const AnimatedServicesSection: React.FC<AnimatedServicesSectionProps> = (
                     <img
                       src={service.img}
                       alt=""
-                      width={720}
-                      height={540}
+                      width={640}
+                      height={400}
                       loading="lazy"
                       decoding="async"
-                      className="w-full aspect-[4/3] object-cover transition-transform duration-500 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
+                      className="w-full aspect-[16/10] object-cover transition-transform duration-500 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
                     />
                   ) : (
-                    <div className="w-full aspect-[4/3] bg-paper-soft" />
+                    <div className="w-full aspect-[16/10] bg-paper-soft" />
                   )}
                 </div>
-                <div className="p-6 md:p-7 flex flex-col gap-3">
+                <div className="p-5 md:p-6 flex flex-col gap-3">
                   <Index n={`0${index + 1}`} />
                   <h3 className="font-dm text-[22px] md:text-[26px] leading-snug text-ink">
                     {service.title}

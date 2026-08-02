@@ -1,4 +1,8 @@
-const Logo = () => {
+interface LogoProps {
+  className?: string;
+}
+
+const Logo = ({ className }: LogoProps) => {
   return (
     <svg
       width="200"
@@ -6,6 +10,7 @@ const Logo = () => {
       viewBox="0 0 300 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <image
         href="/MELARI.png"
