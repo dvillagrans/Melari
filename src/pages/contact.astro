@@ -10,26 +10,33 @@ import ContactForm from '../components/contact-form.tsx'
   description="Contáctanos para agendar tu cita o resolver tus dudas sobre los tratamientos y terapias de Melari Spa."
 >
 
-  <!-- Banner Section -->
+  <!-- Page header -->
 
-  <section class="w-full bg-contact h-[50vh] flex justify-center items-end">
-    <div class="py-[30px] lg:py-[41px] px-[60px] lg:px-[152px] flex flex-col justify-center items-center bg-white rounded-tl-[37px] rounded-tr-[37px] gap-2.5">
-      <h1 class="text-[30px] leading-[40px] lg:text-[50px] lg:leading-[62px] font-dm capitalize text-primary-200 ">Contáctanos</h1>
-      <p class="text-base lg:text-[22px] lg:leading-[33px] tracking-tight font-jost text-text-gray"> <a href="/">Inicio</a> / Contacto</p>
-    </div>
+  <section class="w-full max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 pt-[140px] lg:pt-[180px]">
+    <p class="eyebrow text-accent flex items-center gap-4">
+      <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
+      <a href="/" class="hover:text-accent-dark transition-colors">Inicio</a>
+      <span aria-hidden="true">/</span>
+      Contacto
+    </p>
+    <h1
+      class="mt-6 font-dm text-[34px] leading-[1.1] md:text-[54px] text-ink max-w-[20ch]"
+    >
+      Nos encanta conocer nuevas personas y ayudarlas.
+    </h1>
+    <p class="mt-6 font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[52ch]">
+      Escríbenos para agendar una cita o resolver tus dudas sobre los
+      tratamientos y terapias de Melari Spa.
+    </p>
   </section>
 
-  <!-- Intro Section -->
-
-	<section class="lg:max-w-[1200px] flex flex-col gap-8 lg:gap-10 px-5 md:px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[200px]">
-		<h2 class="text-[30px] text-center capitalize font-dm tracking-wide lg:max-w-[60%] leading-8 md:leading-[62.50px] md:text-[50px] mx-auto text-text-blue ">Nos encanta conocer nuevas personas y ayudarlas.</h2>
-
-    <!-- main section -->
-    <div class="grid grid-cols-1 gap-[55px] pt-20 lg:grid-cols-3 place-content-center">
+  <!-- main section -->
+  <section class="lg:max-w-[1200px] px-5 md:px-12 xl:px-0 w-full mx-auto pt-[80px] lg:pt-[100px]">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-[55px] items-start">
       <ContactInfo />
       <ContactForm />
     </div>
-	</section>
+  </section>
 
  
 
