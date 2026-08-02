@@ -26,71 +26,68 @@ const ProjectCardMedia: React.FC<{ proj: Project }> = ({ proj }) => (
       height={853}
       loading="lazy"
       decoding="async"
-      className="aspect-[3/2] w-full object-cover transition-transform duration-500 ease-out-smooth group-hover:scale-105 motion-reduce:transition-none"
+      className="w-full aspect-[4/3] object-cover transition-transform duration-500 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
     />
-    <div
-      aria-hidden="true"
-      className="absolute inset-0 bg-linear-to-t from-text-blue/75 via-text-blue/15 to-transparent"
-    />
-    <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 text-white">
-      <p className="flex flex-col tracking-tight leading-8">
-        <span className="font-dm text-[22px] lg:text-[25px]">
-          {proj.name}
-        </span>
-        <span className="font-jost text-sm md:text-base text-white/85">
-          {proj.text}
-        </span>
-      </p>
-      {proj.href && (
-        <span className="mt-4 inline-flex items-center gap-2 font-jost font-semibold text-sm uppercase tracking-widest border-b-2 border-primary-100 pb-1
-                         transition-[border-color,transform] duration-300 group-hover:border-white group-hover:translate-x-1
-                         motion-reduce:transition-none">
-          Ver más
-          <Arrow />
-        </span>
-      )}
-    </div>
   </>
 );
 
 export const AnimatedProjectsSection: React.FC<AnimatedProjectsSectionProps> = ({ projects }) => {
   return (
-    <section
-      className="lg:max-w-[1200px] px-5 md:px-12 xl:px-0 w-full mx-auto pt-[100px] lg:pt-[100px]"
-    >
-      <h2
-        className="font-dm tracking-wide text-center leading-[37px] lg:leading-[62.50px] text-[30px] lg:text-[50px] w-full lg:max-w-[50%] pb-2 mx-auto"
-      >
-        Lo Mejor de Nuestros Servicios
-      </h2>
-      <p
-        className="text-base md:text-[22px] text-center tracking-tight font-jost text-text-gray leading-[33px] lg:max-w-[60%] mx-auto"
-      >
-        Experimenta la excelencia en bienestar en Melari. Nuestros servicios
-        estrella te llevan a un mundo de relajación y rejuvenecimiento, donde cada
-        visita es una experiencia inolvidable.
-      </p>
-      <div
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-[104px] lg:gap-y-[56px] mt-12 lg:mt-[93px]"
-      >
-        {projects.map((proj) =>
-          proj.href ? (
+    <section className="w-full lg:max-w-[1200px] px-5 md:px-12 xl:px-0 mx-auto pt-[100px] lg:pt-[140px]">
+      {/* Editorial header */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+        <div className="md:col-span-8">
+          <p className="eyebrow text-accent flex items-center gap-4">
+            <span aria-hidden="true" className="inline-block h-px w-10 bg-line"></span>
+            Nuestros servicios
+          </p>
+          <h2 className="mt-5 font-dm text-[34px] leading-[1.1] md:text-[48px] text-ink max-w-[16ch]">
+            Lo Mejor de Nuestros Servicios
+          </h2>
+        </div>
+        <div className="md:col-span-4 md:text-right">
+          <p className="font-jost text-base md:text-lg leading-[28px] text-ink-soft max-w-[34ch] md:ml-auto">
+            Experimenta la excelencia en bienestar en Melari, donde cada visita
+            es una experiencia inolvidable.
+          </p>
+        </div>
+      </div>
+
+      {/* Editorial alternation: every other card drops down and sits off
+          the baseline for a magazine-like rhythm. */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-10 lg:gap-y-[72px] mt-12 lg:mt-16">
+        {projects.map((proj, index) => {
+          const offset = index % 2 === 1 ? 'md:mt-16' : '';
+          return (
             <a
               key={proj.name}
-              href={proj.href}
-              className="group relative block rounded-card overflow-hidden shadow-card hover:shadow-lift transition-shadow duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none"
+              href={proj.href ?? '/services'}
+              className={`group relative block ${offset} rounded-card overflow-hidden paper-frame
+                          focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent`}
             >
-              <ProjectCardMedia proj={proj} />
+              <div className="overflow-hidden">
+                <ProjectCardMedia proj={proj} />
+              </div>
+              <div className="p-6 md:p-7 flex items-start justify-between gap-6">
+                <div>
+                  <h3 className="font-dm text-[22px] md:text-[26px] leading-snug text-ink">
+                    {proj.name}
+                  </h3>
+                  <p className="mt-2 font-jost text-base leading-[26px] text-ink-soft">
+                    {proj.text}
+                  </p>
+                </div>
+                <span
+                  className="mt-1 inline-flex shrink-0 items-center gap-2 font-jost text-sm font-semibold uppercase tracking-widest
+                             text-accent transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+                  aria-hidden="true"
+                >
+                  <Arrow />
+                </span>
+              </div>
             </a>
-          ) : (
-            <div
-              key={proj.name}
-              className="group relative block rounded-card overflow-hidden shadow-card"
-            >
-              <ProjectCardMedia proj={proj} />
-            </div>
-          )
-        )}
+          );
+        })}
       </div>
     </section>
   );

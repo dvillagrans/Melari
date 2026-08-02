@@ -20,22 +20,26 @@ const projects = (
   title="Servicios | Melari Spa"
   description="Explora los servicios de Melari Spa: masajes, terapias, faciales y nutrición para cuerpo y mente."
 >
-  <!-- Banner Section -->
-  <section class="w-full bg-services h-[50vh] flex justify-center items-end">
-    <div
-      class="py-[30px] lg:py-[41px] px-[60px] lg:px-[152px] flex flex-col justify-center items-center bg-white rounded-tl-[37px] rounded-tr-[37px] gap-2.5"
+  <!-- Page header -->
+  <section class="w-full max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 pt-[140px] lg:pt-[180px]">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex flex-wrap items-center gap-2 eyebrow text-ink-soft">
+        <li>
+          <a href="/" class="link-draw hover:text-ink">Inicio</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="text-ink">Servicios</li>
+      </ol>
+    </nav>
+    <h1
+      class="mt-6 font-dm text-[34px] leading-[1.1] md:text-[54px] text-ink max-w-[16ch]"
     >
-      <h1
-        class="text-[30px] leading-[40px] lg:text-[50px] lg:leading-[62px] font-dm capitalize text-primary-200"
-      >
-        Servicios
-      </h1>
-      <p
-        class="text-base lg:text-[22px] lg:leading-[33px] tracking-tight font-jost text-text-gray"
-      >
-        <a href="/">Inicio</a> / Servicios
-      </p>
-    </div>
+      Servicios
+    </h1>
+    <p class="mt-6 font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[52ch]">
+      Masajes, terapias, faciales y nutrición para cuerpo y mente. Elige el
+      tratamiento que mejor acompañe tu momento.
+    </p>
   </section>
 
   <!-- Services Section -->
