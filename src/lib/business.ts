@@ -16,8 +16,23 @@
 
 export type SiteMode = "preview" | "live";
 
-const mode: SiteMode =
-  (import.meta.env.SITE_MODE as SiteMode | undefined) ?? "preview";
+const rawMode: string | undefined = import.meta.env.SITE_MODE as
+  | string
+  | undefined;
+
+// Validate SITE_MODE at runtime: only exactly "preview" or "live" are
+// accepted. Anything else fails the build with an explicit message so a
+// typo (e.g. SITE_MODE=production) can never silently fall back.
+if (
+  rawMode !== undefined &&
+  (typeof rawMode !== "string" || (rawMode !== "preview" && rawMode !== "live"))
+) {
+  throw new Error(
+    `[site] Invalid SITE_MODE="${String(rawMode)}". Allowed values are exactly "preview" or "live".`,
+  );
+}
+
+const mode: SiteMode = rawMode === "live" ? "live" : "preview";
 
 // ---------------------------------------------------------------------------
 // Business data — edit here when the client confirms each field.
@@ -141,11 +156,13 @@ export const jsonLdOpeningHours = (() => {
 // Live-mode validation — the build fails if essential data is missing.
 // ---------------------------------------------------------------------------
 
+// Structural fields that are always required in live mode. The conversion
+// channel is validated separately below (at least ONE of bookingUrl /
+// whatsapp / phone, not all of them).
 const requiredLiveFields: Array<[keyof typeof business, string]> = [
-  ["phone", "business.phone"],
-  ["whatsapp", "business.whatsapp"],
   ["address", "business.address"],
   ["city", "business.city"],
+  ["country", "business.country"],
   ["domain", "business.domain"],
 ];
 
@@ -159,6 +176,8 @@ function validateLive(): void {
         "Add the confirmed client data to src/lib/business.ts before going live.",
     );
   }
+  // At least one functional conversion channel is mandatory; any single one
+  // of bookingUrl / whatsapp / phone is enough.
   if (!conversionChannel) {
     throw new Error(
       "[site mode=live] No conversion channel configured. " +

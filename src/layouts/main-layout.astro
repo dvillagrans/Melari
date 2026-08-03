@@ -7,6 +7,7 @@ import {
   canonicalUrl,
   business,
   jsonLdOpeningHours,
+  socialLinks,
 } from "../lib/business";
 
 export interface LayoutProps {
@@ -25,12 +26,10 @@ const canonical = canonicalUrl
   ? `${canonicalUrl}${Astro.url.pathname === "/" ? "" : Astro.url.pathname}`
   : "";
 
-const social = {
-  facebook: "",
-  instagram: "",
-  tiktok: "",
-};
-const socialLinks = Object.entries(social).filter(([, url]) => url);
+// Absolute image URL when live (canonical present), relative path otherwise.
+const absoluteOgImage = canonicalUrl
+  ? `${canonicalUrl}${business.ogImage}`
+  : business.ogImage;
 
 // LocalBusiness JSON-LD — only in live mode, only with a domain.
 const localBusinessJsonLd = (() => {
@@ -60,7 +59,7 @@ const localBusinessJsonLd = (() => {
       ? { openingHoursSpecification: jsonLdOpeningHours }
       : {}),
     ...(socialLinks.length > 0
-      ? { sameAs: socialLinks.map(([, url]) => url) }
+      ? { sameAs: socialLinks.map(({ url }) => url) }
       : {}),
   };
 })();
@@ -95,11 +94,11 @@ const localBusinessJsonLd = (() => {
     <meta property="og:locale" content={business.locale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={canonical ? `${canonicalUrl}${business.ogImage}` : business.ogImage} />
+    <meta property="og:image" content={absoluteOgImage} />
     {canonical && <meta property="og:url" content={canonical} />}
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:image" content={business.ogImage} />
+    <meta name="twitter:image" content={absoluteOgImage} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
