@@ -6,11 +6,13 @@ import { isLive, ctaLabel, conversionChannel } from "../lib/business";
 
 // CTA target: /services in preview, the conversion channel in live.
 const ctaHref = isLive && conversionChannel ? conversionChannel.href : "/services";
+// CTA label: "Ver tratamientos" in preview, the channel-aware label in live.
+const ctaText = isLive && conversionChannel ? ctaLabel : "Ver tratamientos";
 ---
 
 <MainLayout
   title="Sobre Nosotros | Melari Spa"
-  description="Melari Spa ofrece tratamientos de belleza y bienestar: masajes, tratamientos faciales, depilación y mucho más."
+  description="Melari Spa ofrece tratamientos de belleza y bienestar: masajes, tratamientos faciales y terapias de relajación."
 >
   <!-- Hero editorial: "Sobre nosotros" as context, a more human proposition as the headline -->
   <section class="relative w-full overflow-hidden bg-paper">
@@ -159,7 +161,7 @@ const ctaHref = isLive && conversionChannel ? conversionChannel.href : "/service
         href={ctaHref}
         class="shrink-0 rounded-full bg-primary-200 inline-flex items-center gap-2 px-9 py-4 text-white font-semibold tracking-tight transition-colors duration-300 hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       >
-        {ctaLabel}
+        {ctaText}
       </a>
     </div>
   </section>

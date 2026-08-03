@@ -8,12 +8,13 @@ export interface ManifestoProps {
 /**
  * Brand manifesto: a semantic <blockquote> with an editorial treatment.
  * Replaces the previous quote component that used an <h4> (wrong heading
- * level) and mislabeled a brand statement as social proof.
+ * level) and mislabeled a brand statement as social proof. No `cite`
+ * attribute: this is Melari's own statement, not a quotation from an
+ * external source.
  */
 const Manifesto = ({ text, name }: ManifestoProps) => {
   return (
     <blockquote
-      cite="/about"
       className="relative mx-auto w-full max-w-[820px] flex flex-col items-center gap-5 px-2 text-center lg:gap-6"
     >
       <span aria-hidden="true" className="inline-flex text-accent">
