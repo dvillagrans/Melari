@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import MainLayout from "../../layouts/main-layout.astro";
 import { serviceSlug } from "../../lib/slug";
+import { isLive, conversionChannel, ctaLabel } from "../../lib/business";
 
 export async function getStaticPaths() {
   const services = await getCollection(
@@ -108,21 +109,32 @@ const { name, text, img } = data;
           </div>
         )}
         <div class="pt-4 border-t border-line">
-          <button
-            type="button"
-            disabled
-            aria-disabled="true"
-            class="rounded-full flex capitalize items-center justify-center gap-[9px] w-fit text-white text-base lg:text-lg font-semibold font-['Jost'] leading-snug tracking-tight px-10 py-4 md:px-[44px] md:py-[20px] bg-ink/60 cursor-not-allowed"
-          >
-            Agendar cita
-          </button>
-          <p
-            id="reserva-proximamente"
-            class="mt-4 text-sm md:text-base font-jost tracking-tight text-ink-soft"
-          >
-            La reserva en línea aún no está integrada con TimeUp. Estará
-            disponible próximamente.
-          </p>
+          {
+            isLive && conversionChannel ? (
+              <a
+                href={conversionChannel.href}
+                class="rounded-full inline-flex capitalize items-center justify-center gap-[9px] w-fit text-white text-base lg:text-lg font-semibold font-['Jost'] leading-snug tracking-tight px-10 py-4 md:px-[44px] md:py-[20px] bg-primary-200 transition-colors duration-300 hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              >
+                {ctaLabel}
+              </a>
+            ) : (
+              <>
+                <a
+                  href="/contact"
+                  class="rounded-full inline-flex capitalize items-center justify-center gap-[9px] w-fit text-white text-base lg:text-lg font-semibold font-['Jost'] leading-snug tracking-tight px-10 py-4 md:px-[44px] md:py-[20px] bg-primary-200 transition-colors duration-300 hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                >
+                  Agendar cita
+                </a>
+                <p
+                  id="reserva-proximamente"
+                  class="mt-4 text-sm md:text-base font-jost tracking-tight text-ink-soft"
+                >
+                  La reserva en línea aún no está integrada con TimeUp. Estará
+                  disponible próximamente.
+                </p>
+              </>
+            )
+          }
         </div>
       </div>
     </div>

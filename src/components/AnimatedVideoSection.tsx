@@ -56,7 +56,7 @@ export const AnimatedVideoSection: React.FC<AnimatedVideoSectionProps> = ({ titl
             </p>
             <h2
               className={`mt-5 font-dm text-[34px] leading-[1.1] md:text-[48px] text-ink max-w-[22ch]
-                          transition-all duration-1000 ease-out-smooth
+                          transition-[opacity,transform] duration-1000 ease-out-smooth
                           ${isVisible ? 'revealed' : 'reveal-init'}
                           motion-reduce:transition-none`}
             >
@@ -73,7 +73,7 @@ export const AnimatedVideoSection: React.FC<AnimatedVideoSectionProps> = ({ titl
         <div
           style={isVisible ? { transitionDelay: '150ms' } : undefined}
           className={`mt-12 lg:mt-16
-                      transition-all duration-1000 ease-out-smooth
+                      transition-[opacity,transform] duration-1000 ease-out-smooth
                       ${isVisible ? 'revealed' : 'reveal-init'}
                       motion-reduce:transition-none`}
         >

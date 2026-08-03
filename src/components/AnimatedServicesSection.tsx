@@ -5,6 +5,7 @@ interface Service {
   img?: string;
   title: string;
   text: string;
+  href?: string;
 }
 
 interface AnimatedServicesSectionProps {
@@ -88,15 +89,8 @@ export const AnimatedServicesSection: React.FC<AnimatedServicesSectionProps> = (
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 mt-10 lg:mt-14 items-start">
         {services.map((service, index) => {
           const delay = { transitionDelay: `${index * 120}ms` };
-          return (
-            <article
-              key={service.title}
-              style={isVisible ? delay : undefined}
-              className={`md:col-span-4 flex flex-col
-                          transition-all duration-700 ease-out-smooth
-                          ${isVisible ? 'revealed' : 'reveal-init'}
-                          motion-reduce:transition-none`}
-            >
+          const inner = (
+            <>
               <div className="paper-frame rounded-card overflow-hidden group">
                 <div className="overflow-hidden">
                   {service.img ? (
@@ -123,17 +117,36 @@ export const AnimatedServicesSection: React.FC<AnimatedServicesSectionProps> = (
                   </p>
                 </div>
               </div>
-              <a
-                href="/services"
+              <span
                 className="mt-5 inline-flex items-center gap-2 font-jost text-sm font-semibold tracking-[0.08em] uppercase text-ink
                            group-hover:text-accent transition-colors duration-300
                            link-draw w-fit
-                           focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent
                            motion-reduce:transition-none"
               >
-                Ver servicios
+                Ver servicio
                 <ArrowSec className="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" />
-              </a>
+              </span>
+            </>
+          );
+          return (
+            <article
+              key={service.title}
+              style={isVisible ? delay : undefined}
+              className={`md:col-span-4 flex flex-col group
+                          transition-opacity duration-700 ease-out-smooth
+                          ${isVisible ? 'revealed' : 'reveal-init'}
+                          motion-reduce:transition-none`}
+            >
+              {service.href ? (
+                <a
+                  href={service.href}
+                  className="flex flex-col focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent rounded-card"
+                >
+                  {inner}
+                </a>
+              ) : (
+                inner
+              )}
             </article>
           );
         })}

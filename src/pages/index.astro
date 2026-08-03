@@ -9,11 +9,19 @@ import { AnimatedExperienceSection } from "../components/AnimatedExperienceSecti
 import { AnimatedProjectsSection } from "../components/AnimatedProjectsSection";
 import MapsSection from "../components/MapsSection";
 import { serviceSlug } from "../lib/slug";
+import { isLive, ctaLabel, conversionChannel } from "../lib/business";
 
-const services = (await getCollection("highlights")).map(({ data }) => ({
+// Featured services (published) for the projects grid — each links to its detail page.
+const featured = (
+  await getCollection("services", ({ data }) => data.featured && !data.provisional)
+).sort((a, b) => a.id.localeCompare(b.id));
+
+const services = (await getCollection("highlights")).map(({ data }, i) => ({
   img: data.img,
   title: data.title,
   text: data.text,
+  // Each highlight card links to the related published service detail.
+  href: featured[i] ? `/services/${serviceSlug(featured[i])}` : "/services",
 }));
 
 const reviews = (
@@ -25,9 +33,7 @@ const reviews = (
   review: data.review,
 }));
 
-const projects = (
-  await getCollection("services", ({ data }) => data.featured && !data.provisional)
-).map((entry) => ({
+const projects = featured.map((entry) => ({
   img: entry.data.img,
   name: entry.data.name,
   text: entry.data.text,
@@ -40,6 +46,9 @@ const experiences = (
   text: data.text,
   num: data.num,
 }));
+
+// Primary CTA: /services in preview, conversion channel in live.
+const homeCtaHref = isLive && conversionChannel ? conversionChannel.href : "/services";
 ---
 
 <MainLayout
@@ -89,9 +98,9 @@ const experiences = (
           armonía. Cada detalle ha sido cuidadosamente diseñado para ofrecerte
           una experiencia única.
         </p>
-        <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
+        <!-- Primary CTA: /services in preview, booking/WhatsApp/phone in live. -->
         <div class="hero-item mt-9" style="--d: 480ms">
-          <Button text="Agendar una cita" href="/contact" />
+          <Button text={ctaLabel} href={homeCtaHref} />
         </div>
       </div>
 
@@ -227,9 +236,9 @@ const experiences = (
         </p>
       </div>
 
-      <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
+      <!-- Primary CTA: /services in preview, booking/WhatsApp/phone in live. -->
       <div class="mt-9">
-        <Button text="Agenda una cita" href="/contact" />
+        <Button text={ctaLabel} href={homeCtaHref} />
       </div>
     </div>
   </section>
