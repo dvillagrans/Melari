@@ -5,11 +5,20 @@
  * Tailwind v4 replaces the JS config theme with CSS variables under
  * @theme. Namespaces: --color-* (colors), --font-* (font families),
  * --background-image-* (bg-<name>), --shadow-* (box-shadow),
- * --radius-* (border-radius), --ease-* (transition timing). */
+ * --radius-* (border-radius), --ease-* (transition timing).
+ *
+ * Premium redesign tokens:
+ * - Keep the Melari brand teal (#04acbc) as the single accent.
+ * - Introduce a warm neutral system (ink / bone / sand / line) so sections
+ *   alternate between three deliberate backgrounds: white, warm paper, ink.
+ * - Keep every legacy token name working (primary-100..600, text-blue,
+ *   text-gray, accent, surface, fonts, shadows) so components can be moved to
+ *   the new system incrementally without a broken intermediate state. */
 
 @theme {
   --color-main: #ffffff;
 
+  /* Brand teal (kept) + derived accents */
   --color-primary-100: #04acbc;
   --color-primary-200: #04acbc;
   --color-primary-300: #b4cccc;
@@ -17,18 +26,26 @@
   --color-primary-500: #0e8491;
   --color-primary-600: #39676b;
 
+  --color-accent: #04acbc;
+  --color-accent-dark: #0891a1;
+  --color-accent-soft: #b4cccc;
+
+  /* Text */
   --color-text-blue: #1b2534;
   --color-text-gray: #4d4f52;
   --color-text-gray-100: #5f5f5f;
   --color-text-gray-200: #4d5053;
   --color-text-gray-300: #e5e5e5;
 
-  --color-accent: #04acbc;
-  --color-accent-dark: #0891a1;
-  --color-accent-soft: #b4cccc;
-
   --color-surface: #b4cccc;
   --color-surface-dark: #9cb8b8;
+
+  /* Editorial neutrals */
+  --color-ink: #1b2534;
+  --color-ink-soft: #4d4f52;
+  --color-paper: #f7f5f0;
+  --color-paper-soft: #efe9e0;
+  --color-line: rgba(27, 37, 52, 0.14);
 
   --font-dm: "DM Serif Display", serif;
   --font-jost: "Jost", sans-serif;
@@ -40,10 +57,50 @@
 
   --shadow-card: 0 18px 40px -20px rgba(27, 37, 52, 0.18);
   --shadow-lift: 0 28px 56px -16px rgba(27, 37, 52, 0.24);
+  --shadow-paper: 0 1px 0 rgba(27, 37, 52, 0.04), 0 24px 48px -28px rgba(27, 37, 52, 0.22);
 
   --radius-card: 1.25rem;
 
   --ease-out-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Base editorial layer */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-jost);
+  color: var(--color-ink);
+  background: var(--color-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Typographic defaults: display face for headings, generous leading,
+   balanced measures where possible. */
+
+h1, h2, h3 {
+  font-family: var(--font-dm);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+p {
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
 }
 
 /* Custom utilities previously provided by the tailwind.config.cjs plugin. */
@@ -64,6 +121,49 @@
   align-items: center;
 }
 
+/* Editorial helpers */
+
+/* Eyebrow: small caps label with an optional rule line. */
+@utility eyebrow {
+  font-family: var(--font-jost);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Hairline divider used under section headers. */
+@utility hairline {
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* Paper frame: warm border + white padding + soft shadow for media. */
+@utility paper-frame {
+  border: 1px solid var(--color-paper-soft);
+  background: #ffffff;
+  box-shadow: var(--shadow-paper);
+}
+
+/* Draw-underline link: underline grows from the left on hover. */
+@utility link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-out-smooth);
+}
+
+@utility link-draw-hover {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-draw {
+    transition: none;
+  }
+}
+
 /* Reveal animation fallback.
  *
  * Los elementos con .reveal-init solo se ocultan cuando JavaScript está
@@ -73,7 +173,7 @@
 
 html.js .reveal-init {
   opacity: 0;
-  transform: translateY(2rem);
+  transform: translateY(24px);
 }
 
 html.js .revealed {

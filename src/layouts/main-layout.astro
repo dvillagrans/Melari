@@ -1,7 +1,14 @@
 ---
 import Navbar from "../components/navbar.tsx";
-import Footer from "../components/footer.tsx";
+import Footer from "../components/footer.astro";
 import "../styles/global.css";
+import {
+  isLive,
+  canonicalUrl,
+  business,
+  jsonLdOpeningHours,
+  socialLinks,
+} from "../lib/business";
 
 export interface LayoutProps {
   title: string;
@@ -13,6 +20,49 @@ const DEFAULT_DESCRIPTION =
 
 const { title } = Astro.props as LayoutProps;
 const description = Astro.props.description ?? DEFAULT_DESCRIPTION;
+
+// Canonical for the current page (full URL) or "" when not live.
+const canonical = canonicalUrl
+  ? `${canonicalUrl}${Astro.url.pathname === "/" ? "" : Astro.url.pathname}`
+  : "";
+
+// Absolute image URL when live (canonical present), relative path otherwise.
+const absoluteOgImage = canonicalUrl
+  ? `${canonicalUrl}${business.ogImage}`
+  : business.ogImage;
+
+// LocalBusiness JSON-LD — only in live mode, only with a domain.
+const localBusinessJsonLd = (() => {
+  if (!isLive || !canonicalUrl) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    name: business.name,
+    description: business.description,
+    url: canonicalUrl,
+    telephone: business.phone,
+    email: business.email,
+    image: `${canonicalUrl}${business.ogImage}`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: business.address,
+      addressLocality: business.city,
+      addressRegion: business.region,
+      postalCode: business.postalCode,
+      addressCountry: business.country,
+    },
+    ...(business.latitude !== undefined &&
+    business.longitude !== undefined
+      ? { geo: { "@type": "GeoCoordinates", latitude: business.latitude, longitude: business.longitude } }
+      : {}),
+    ...(jsonLdOpeningHours
+      ? { openingHoursSpecification: jsonLdOpeningHours }
+      : {}),
+    ...(socialLinks.length > 0
+      ? { sameAs: socialLinks.map(({ url }) => url) }
+      : {}),
+  };
+})();
 ---
 
 <html lang="es" class="no-js">
@@ -24,21 +74,41 @@ const description = Astro.props.description ?? DEFAULT_DESCRIPTION;
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {isLive ? (
+      <>
+        <link rel="canonical" href={canonical} />
+        {localBusinessJsonLd && (
+          <script
+            type="application/ld+json"
+            set:html={JSON.stringify(localBusinessJsonLd)}
+            is:inline
+          />
+        )}
+      </>
+    ) : (
+      <meta name="robots" content="noindex, nofollow" />
+    )}
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Melari Spa" />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:locale" content={business.locale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/banner.webp" />
+    <meta property="og:image" content={absoluteOgImage} />
+    {canonical && <meta property="og:url" content={canonical} />}
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:image" content="/banner.webp" />
+    <meta name="twitter:image" content={absoluteOgImage} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
+      as="style"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
@@ -53,12 +123,17 @@ const description = Astro.props.description ?? DEFAULT_DESCRIPTION;
       <!-- All different pages to be rendered here -->
       <Footer />
     </main>
-    <p
-      class="tracking-tight text-base text-center border border-gray-300 bg-white py-10 lg:text-[22px] lg:leading-[33px] font-jost text-text-gray"
-    >
-      Copyright © MelariSpa | Designed by Diego Villagran
-    </p>
-    <script src="//code.tidio.co/eytnto8chqpwuaglmim8cv0bmbotyvvp.js" is:inline async
-    ></script>
+    {
+      // Tidio chat widget: only in live mode. It is a third-party script and
+      // out of the approved editorial scope; preview builds must not load it.
+      // Decision recorded in docs/go-live-checklist.md.
+      isLive && (
+        <script
+          src="//code.tidio.co/eytnto8chqpwuaglmim8cv0bmbotyvvp.js"
+          is:inline
+          async
+        ></script>
+      )
+    }
   </body>
 </html>

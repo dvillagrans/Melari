@@ -9,11 +9,19 @@ import { AnimatedExperienceSection } from "../components/AnimatedExperienceSecti
 import { AnimatedProjectsSection } from "../components/AnimatedProjectsSection";
 import MapsSection from "../components/MapsSection";
 import { serviceSlug } from "../lib/slug";
+import { isLive, ctaLabel, conversionChannel } from "../lib/business";
 
-const services = (await getCollection("highlights")).map(({ data }) => ({
+// Featured services (published) for the projects grid — each links to its detail page.
+const featured = (
+  await getCollection("services", ({ data }) => data.featured && !data.provisional)
+).sort((a, b) => a.id.localeCompare(b.id));
+
+const services = (await getCollection("highlights")).map(({ data }, i) => ({
   img: data.img,
   title: data.title,
   text: data.text,
+  // Each highlight card links to the related published service detail.
+  href: featured[i] ? `/services/${serviceSlug(featured[i])}` : "/services",
 }));
 
 const reviews = (
@@ -25,9 +33,7 @@ const reviews = (
   review: data.review,
 }));
 
-const projects = (
-  await getCollection("services", ({ data }) => data.featured && !data.provisional)
-).map((entry) => ({
+const projects = featured.map((entry) => ({
   img: entry.data.img,
   name: entry.data.name,
   text: entry.data.text,
@@ -40,6 +46,9 @@ const experiences = (
   text: data.text,
   num: data.num,
 }));
+
+// Primary CTA: /services in preview, conversion channel in live.
+const homeCtaHref = isLive && conversionChannel ? conversionChannel.href : "/services";
 ---
 
 <MainLayout
@@ -49,37 +58,125 @@ const experiences = (
   <!-- Banner -->
 
   <section
-    class="hero relative w-full bg-hero bg-no-repeat bg-cover bg-center min-h-screen min-h-dvh flex items-center overflow-hidden"
+    class="hero relative w-full overflow-hidden bg-ink"
   >
+    <!-- Film grain texture -->
     <div
       aria-hidden="true"
-      class="absolute inset-0 bg-linear-to-b from-black/60 via-black/30 to-black/60"
+      class="hero-grain absolute inset-0"
+    ></div>
+    <!-- Soft scrim only on the text side; the right column lets the
+         photography breathe instead of flattening it under a gradient. -->
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 bg-linear-to-r from-ink/85 via-ink/40 to-ink/5"
     ></div>
     <div
-      class="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-12 py-24 md:py-32 flex flex-col"
+      class="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-12 py-24 md:py-0 md:min-h-dvh grid grid-cols-1 md:grid-cols-12 items-center gap-12"
     >
-      <p
-        class="font-jost text-sm md:text-base uppercase tracking-[0.35em] text-primary-100 mb-5"
-      >
-        Melari Spa
-      </p>
-      <h1
-        class="font-dm text-white text-[clamp(2.5rem,7vw,6rem)] leading-[1.06] md:leading-[1.08] max-w-[16ch]"
-      >
-        SPA & TERAPIA ALTERNATIVA
-      </h1>
-      <span aria-hidden="true" class="block h-px w-16 bg-primary-100/80 my-6"></span>
-      <p
-        class="font-jost text-white/90 text-base md:text-[22px] leading-relaxed md:leading-[33px] max-w-[46ch]"
-      >
-        En cada rincón de nuestro spa, encontrarás un refugio de calma y
-        armonía. Cada detalle ha sido cuidadosamente diseñado para ofrecerte una
-        experiencia única.
-      </p>
-      <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
-      <div class="mt-9">
-        <Button text="Agendar una cita" href="/contact" />
+      <div class="md:col-span-7 flex flex-col items-start md:py-28">
+        <p
+          class="hero-item eyebrow text-primary-100 mb-6 flex items-center gap-4"
+          style="--d: 0ms"
+        >
+          <span aria-hidden="true" class="inline-block h-px w-10 bg-primary-100/70"></span>
+          Melari Spa · Estudio de bienestar
+        </p>
+        <h1
+          class="hero-item font-dm text-white text-[clamp(2.75rem,7vw,5.75rem)] leading-[1.02] max-w-[11ch]"
+          style="--d: 120ms"
+        >
+          SPA &amp; <em class="italic text-accent">Terapia</em><br />
+          Alternativa
+        </h1>
+        <span aria-hidden="true" class="hero-item block h-px w-16 bg-primary-100/70 my-7" style="--d: 240ms"></span>
+        <p
+          class="hero-item font-jost text-white/85 text-base md:text-lg leading-relaxed md:leading-[30px] max-w-[46ch]"
+          style="--d: 360ms"
+        >
+          En cada rincón de nuestro spa, encontrarás un refugio de calma y
+          armonía. Cada detalle ha sido cuidadosamente diseñado para ofrecerte
+          una experiencia única.
+        </p>
+        <!-- Primary CTA: /services in preview, booking/WhatsApp/phone in live. -->
+        <div class="hero-item mt-9" style="--d: 480ms">
+          <Button text={ctaLabel} href={homeCtaHref} />
+        </div>
       </div>
+
+      <!-- Editorial framed photograph, offset into the right column. -->
+      <div class="md:col-span-5 relative hidden md:block md:py-28">
+        <figure class="hero-item paper-frame rounded-card group relative" style="--d: 200ms">
+          <div class="overflow-hidden rounded-card">
+            <img
+              src="/banner.webp"
+              alt=""
+              width={1280}
+              height={853}
+              loading="eager"
+              decoding="async"
+              class="w-full aspect-[4/5] object-cover transition-transform duration-700 ease-out-smooth group-hover:scale-[1.03] motion-reduce:transition-none"
+            />
+          </div>
+          <figcaption
+            class="absolute -bottom-8 left-8 right-auto bg-ink px-6 py-4 border border-white/10 rounded-lg"
+          >
+            <span class="eyebrow text-white/60">Refugio de calma</span>
+            <span class="block mt-1 font-jost text-sm text-white/85">
+              Diseñado para cuerpo y mente
+            </span>
+          </figcaption>
+        </figure>
+
+        <!-- Rotating editorial badge -->
+        <div class="absolute -right-8 -top-10 hidden xl:block" aria-hidden="true">
+          <div class="hero-badge relative h-32 w-32">
+            <svg viewBox="0 0 200 200" class="h-full w-full">
+              <defs>
+                <path
+                  id="hero-badge-circle"
+                  d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"
+                />
+              </defs>
+              <circle
+                cx="100"
+                cy="100"
+                r="99"
+                fill="#1b2534"
+                stroke="rgba(255,255,255,0.15)"
+                stroke-width="1"
+              />
+              <text
+                class="fill-white/90"
+                style="font-family: 'Jost', sans-serif; font-size: 12.5px; letter-spacing: 4px; font-weight: 500;"
+              >
+                <textPath href="#hero-badge-circle" startOffset="0">
+                  MELARI SPA · BIENESTAR · TERAPIA ·
+                </textPath>
+              </text>
+              <path
+                d="M100 76 l0 42 M84 102 l16 16 16-16"
+                stroke="#04acbc"
+                stroke-width="3"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div
+      class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-3"
+      aria-hidden="true"
+    >
+      <span class="eyebrow text-white/50">Scroll</span>
+      <span class="block h-10 w-px bg-white/25 overflow-hidden relative">
+        <span class="hero-scroll-line absolute inset-x-0 top-0 h-full bg-white/70"></span>
+      </span>
     </div>
   </section>
 
@@ -90,18 +187,40 @@ const experiences = (
   <!-- About Section -->
 
   <section
-    class="w-full lg:max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 flex flex-col-reverse justify-center items-center lg:grid grid-cols-2 gap-[75px] pt-[100px] lg:pt-[200px]"
+    class="w-full lg:max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 pt-[100px] lg:pt-[150px] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-0"
   >
-    <div
-      class="flex flex-col gap-8 max-w-[472px] items-center lg:items-start py-6"
-    >
-      <h2
-        class="text-[30px] text-center capitalize lg:text-left font-dm tracking-wide leading-8 md:leading-[62.50px] md:text-[50px] text-text-blue"
+    <div class="lg:col-span-5 relative">
+      <figure class="paper-frame rounded-card overflow-hidden">
+        <img
+          src="/about.webp"
+          alt=""
+          width={4196}
+          height={6294}
+          loading="lazy"
+          decoding="async"
+          class="w-full aspect-[3/4] object-cover"
+        />
+      </figure>
+      <div
+        class="hidden lg:block absolute -right-6 -bottom-8 bg-ink text-white px-7 py-5 rounded-lg border border-white/10"
       >
-        SPA Profesional & Servicios de Cuidado Personal
+        <span class="block font-dm text-[28px] leading-none text-primary-100">Melari</span>
+        <span class="block mt-1 eyebrow text-white/60">Spa &amp; Terapia</span>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6 lg:col-start-7 flex flex-col justify-center lg:py-6">
+      <p class="eyebrow text-accent flex items-center gap-4">
+        <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
+        Sobre nosotros
+      </p>
+      <h2
+        class="mt-5 font-dm text-[34px] leading-[1.1] md:text-[46px] text-ink max-w-[20ch]"
+      >
+        SPA Profesional &amp; Servicios de Cuidado Personal
       </h2>
       <p
-        class="text-base md:text-[22px] text-center lg:text-left tracking-tight font-jost text-text-gray leading-[33px]"
+        class="mt-7 font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[54ch]"
       >
         En Melari, nos enorgullecemos de ser el mejor spa y proveedor de
         servicios de cuidado personal. Nuestra dedicación a la excelencia y el
@@ -109,26 +228,18 @@ const experiences = (
         tratamientos y terapias, ofrecemos una experiencia única que
         transformará tu cuerpo y mente.
       </p>
-      <div class="flex gap-4 pt-3 items-center">
+
+      <div class="mt-9 flex items-center gap-5">
         <CallIcon />
-        <p class="flex flex-col text-text-gray-200 font-jost tracking-tight">
-          <span class="text-[22px] leading-8">Llámanos a cualquier hora</span>
+        <p class="flex flex-col text-ink-soft font-jost tracking-tight">
+          <span class="text-[18px] leading-7">Llámanos a cualquier hora</span>
         </p>
       </div>
-      <!-- Booking CTA redirects to /contact. Online booking is NOT integrated with TimeUp (see services/[slug].astro). -->
-      <Button text="Agenda una cita" href="/contact" />
-    </div>
 
-    <div>
-      <img
-        src="/about.webp"
-        alt=""
-        width={4196}
-        height={6294}
-        loading="lazy"
-        decoding="async"
-        class="w-full h-auto"
-      />
+      <!-- Primary CTA: /services in preview, booking/WhatsApp/phone in live. -->
+      <div class="mt-9">
+        <Button text={ctaLabel} href={homeCtaHref} />
+      </div>
     </div>
   </section>
 
@@ -194,41 +305,82 @@ const experiences = (
   <!-- google maps direcction -->
   <MapsSection />
 
-  <!--Style Section -->
   <style>
-    /* The `.hero` rule guarantees a deterministic dvh fallback: Tailwind
-       emits `.min-h-dvh` before `.min-h-screen`, so `100vh` would otherwise
-       win the cascade and the dynamic viewport height would never apply. */
-    .hero {
-      min-height: 100vh;
-    }
+    /* ==== Hero choreography ====
+       Elements fade + rise in sequence using --d (delay). Everything is
+       plain CSS so it works server-first with zero JS; reduced-motion
+       users get the fully visible, static composition. */
 
-    @supports (min-height: 100dvh) {
-      .hero {
-        min-height: 100dvh;
+    @keyframes hero-rise {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
-
-    .hidden {
+    html.js .hero-item {
       opacity: 0;
-      transform: translateX(-100vw);
     }
 
-    .show {
-      opacity: 1;
-      transform: translateX(0);
-      transition: all 0.5s ease;
+    .hero-item {
+      animation: hero-rise 900ms var(--ease-out-smooth) both;
+      animation-delay: var(--d, 0ms);
+    }
+
+    @keyframes hero-badge-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hero-badge svg {
+      animation: hero-badge-spin 22s linear infinite;
+    }
+
+    @keyframes hero-scroll-drop {
+      0% {
+        transform: translateY(-100%);
+      }
+      60% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    .hero-scroll-line {
+      animation: hero-scroll-drop 2.2s ease-in-out infinite;
+    }
+
+    /* Film grain: a tiny, tiled noise overlay at very low opacity so it
+       reads as texture, not a filter. */
+    .hero-grain {
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js .hero-item {
+        opacity: 1;
+        animation: none;
+      }
+
+      .hero-badge svg,
+      .hero-scroll-line {
+        animation: none;
+      }
+
+      .hero-scroll-line {
+        transform: translateY(0);
+      }
     }
   </style>
 </MainLayout>
