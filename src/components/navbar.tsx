@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import Logo from "../icons/logo.tsx";
+import { isLive, ctaLabel, conversionChannel } from "../lib/business";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
   { href: "/about", label: "Sobre nosotros" },
   { href: "/services", label: "Servicios" },
 ];
+
+// Primary CTA target: /services in preview (browse first), the conversion
+// channel (booking / whatsapp / phone) in live.
+const ctaHref = isLive && conversionChannel ? conversionChannel.href : "/services";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -114,8 +119,8 @@ const Navbar = () => {
                 {label}
               </a>
             ))}
-            <a href="/contact" className={ctaClass}>
-              Agendar una cita
+            <a href={ctaHref} className={ctaClass}>
+              {ctaLabel}
             </a>
           </nav>
 
@@ -166,8 +171,8 @@ const Navbar = () => {
               {label}
             </a>
           ))}
-          <a href="/contact" onClick={closeMobileMenu} className={`${ctaClass} mt-4 text-center`}>
-            Agendar una cita
+          <a href={ctaHref} onClick={closeMobileMenu} className={`${ctaClass} mt-4 text-center`}>
+            {ctaLabel}
           </a>
         </nav>
       </div>

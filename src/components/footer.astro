@@ -1,0 +1,123 @@
+---
+import { getCollection } from "astro:content";
+import Facebook from "../icons/facebook.tsx";
+import Instagram from "../icons/instagram.tsx";
+import Logo from "../icons/logo.tsx";
+import {
+  isLive,
+  business,
+  socialLinks,
+} from "../lib/business";
+import { serviceSlug } from "../lib/slug";
+
+// Real links to published (non-provisional) services.
+const serviceLinks = (
+  await getCollection("services", ({ data }) => !data.provisional)
+)
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .slice(0, 4)
+  .map((entry) => ({
+    name: entry.data.name,
+    href: `/services/${serviceSlug(entry)}`,
+  }));
+---
+
+<footer class="mt-[120px] w-full bg-ink text-white/80">
+  <div class="w-full max-w-[1200px] px-5 md:px-12 xl:px-0 mx-auto pt-20 pb-10 md:pt-24">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+      <!-- Brand -->
+      <div class="md:col-span-5 flex flex-col gap-7">
+        <a href="/" class="inline-flex w-fit" aria-label={`${business.name} — Inicio`}>
+          <Logo className="h-12 w-auto md:h-14" />
+        </a>
+        <p class="tracking-tight text-base lg:text-[18px] lg:leading-[30px] font-jost text-white/60 max-w-[38ch]">
+          Somos una SPA que se dedica a la belleza y el bienestar de las
+          personas, ofreciendo servicios de calidad y con los mejores
+          productos del mercado.
+        </p>
+        {
+          isLive && socialLinks.length > 0 ? (
+            <div class="flex gap-4">
+              {socialLinks.map(({ network, url }) => (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${business.name} en ${network}`}
+                  class="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  {network === "facebook" ? <Facebook /> : network === "instagram" ? <Instagram /> : null}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div class="flex flex-col gap-3">
+              <div class="flex gap-4" aria-hidden="true">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/45">
+                  <Facebook />
+                </span>
+                <span class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/45">
+                  <Instagram />
+                </span>
+              </div>
+              <p class="font-jost text-xs tracking-tight text-white/40">
+                Redes sociales: pendiente de verificación
+              </p>
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Páginas -->
+      <nav
+        class="md:col-span-3 flex flex-col gap-5"
+        aria-label="Páginas"
+      >
+        <h2 class="eyebrow text-white/40">Páginas</h2>
+        <div class="flex flex-col gap-4">
+          <a
+            href="/about"
+            class="link-draw w-fit text-white/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            Nosotros
+          </a>
+          <a
+            href="/services"
+            class="link-draw w-fit text-white/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            Servicios
+          </a>
+          <a
+            href="/contact"
+            class="link-draw w-fit text-white/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            Contacto
+          </a>
+        </div>
+      </nav>
+
+      <!-- Servicios (real links) -->
+      <div class="md:col-span-4 flex flex-col gap-5">
+        <h2 class="eyebrow text-white/40">Servicios</h2>
+        <div class="flex flex-col gap-4">
+          {
+            serviceLinks.map(({ name, href }) => (
+              <a
+                href={href}
+                class="link-draw w-fit text-white/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              >
+                {name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-16 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm tracking-tight text-white/40">
+      <p>Copyright © {business.name} | Designed by Diego Villagran</p>
+      <p class="font-jost">{business.name} · Spa y Terapia Alternativa</p>
+    </div>
+  </div>
+</footer>
