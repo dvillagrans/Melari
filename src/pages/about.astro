@@ -1,69 +1,98 @@
 ---
 import MainLayout from "../layouts/main-layout.astro";
-import QuoteText from "../components/quote.tsx";
+import Manifesto from "../components/manifesto.tsx";
 import MapsSection from "../components/MapsSection";
+import { isLive, ctaLabel, conversionChannel } from "../lib/business";
+
+// CTA target: /services in preview, the conversion channel in live.
+const ctaHref = isLive && conversionChannel ? conversionChannel.href : "/services";
 ---
 
 <MainLayout
   title="Sobre Nosotros | Melari Spa"
   description="Melari Spa ofrece tratamientos de belleza y bienestar: masajes, tratamientos faciales, depilación y mucho más."
 >
-  <!-- Page header -->
-
-  <section class="w-full max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 pt-[140px] lg:pt-[180px]">
-    <p class="eyebrow text-accent flex items-center gap-4">
-      <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
-      <a href="/" class="hover:text-accent-dark transition-colors">Inicio</a>
-      <span aria-hidden="true">/</span>
-      Sobre nosotros
-    </p>
-    <h1
-      class="mt-6 font-dm text-[34px] leading-[1.1] md:text-[54px] text-ink max-w-[16ch]"
-    >
-      Sobre Nosotros
-    </h1>
+  <!-- Hero editorial: "Sobre nosotros" as context, a more human proposition as the headline -->
+  <section class="relative w-full overflow-hidden bg-paper">
+    <div
+      aria-hidden="true"
+      class="absolute inset-y-0 right-0 w-1/3 bg-paper-soft/60 hidden lg:block"
+    ></div>
+    <div class="relative w-full max-w-[1200px] mx-auto px-5 md:px-12 xl:px-0 pt-[150px] lg:pt-[190px] pb-[90px] lg:pb-[110px]">
+      <nav aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2 eyebrow text-ink-soft">
+          <li>
+            <a
+              href="/"
+              class="link-draw hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            >
+              Inicio
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-ink">Sobre nosotros</li>
+        </ol>
+      </nav>
+      <p class="mt-8 eyebrow text-accent flex items-center gap-4">
+        <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
+        Sobre nosotros
+      </p>
+      <h1
+        class="mt-6 font-dm text-[34px] leading-[1.08] md:text-[56px] text-ink max-w-[18ch]"
+      >
+        Un espacio donde el cuidado se toma en serio
+      </h1>
+      <p class="mt-7 font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[52ch]">
+        Melari Spa es un lugar pensado para pausar, soltar la prisa y dedicarte
+        tiempo. Tratamientos de belleza y bienestar en un ambiente tranquilo,
+        con atención cercana en cada visita.
+      </p>
+    </div>
   </section>
 
-  <!-- Quote Section -->
-
+  <!-- Manifesto (blockquote semántico) -->
   <section
-    class="w-full px-5 md:px-12 lg:px-0 pt-[90px] lg:pt-[110px] lg:max-w-[1200px] mx-auto"
+    class="w-full px-5 md:px-12 lg:px-0 pt-[90px] lg:pt-[120px] lg:max-w-[1200px] mx-auto"
   >
-    <QuoteText
+    <Manifesto
       text="Lo mejor de nuestros tratamientos es que no solo te hacen sentir bien por fuera, sino también por dentro."
       name="Melari Spa"
     />
   </section>
 
-  <!-- What We Do Section -->
-
+  <!-- Qué ofrece Melari -->
   <section
     class="w-full pt-[100px] lg:pt-[140px] px-5 md:px-12 lg:px-0 mx-auto lg:max-w-[1200px] grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
   >
     <div class="lg:col-span-6 flex flex-col gap-7 lg:order-2">
       <p class="eyebrow text-accent flex items-center gap-4">
         <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
-        01 · Qué hacemos
+        Lo que ofrecemos
       </p>
       <h2
         class="font-dm text-[32px] leading-[1.12] md:text-[44px] text-ink max-w-[16ch]"
       >
-        Qué hacemos
+        Tratamientos para cuerpo, piel y calma
       </h2>
       <p
         class="font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[54ch]"
       >
-        En Melari Spa, ofrecemos una amplia gama de tratamientos de belleza y
-        bienestar para ayudarte a sentirte y verte mejor. Nuestros servicios
-        incluyen masajes, tratamientos faciales, depilación y mucho más.
-        Nuestro equipo de profesionales altamente capacitados está aquí para
-        ayudarte a lograr tus objetivos de belleza y bienestar.
+        En Melari Spa encontrarás masajes, tratamientos faciales y terapias
+        orientadas al bienestar. Cada servicio está pensado como una pausa
+        completa: que el cuerpo se suelte, la piel respire y la mente baje el
+        ritmo.
+      </p>
+      <p
+        class="font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[54ch]"
+      >
+        Los tratamientos que se ofrecen hoy están publicados en la sección de
+        servicios; el catálogo completo se irá sumando conforme se confirme.
       </p>
     </div>
     <figure class="lg:col-span-6 paper-frame rounded-card overflow-hidden">
       <img
         src="/about1.webp"
-        alt=""
+        alt="Sala de masaje de Melari Spa: camilla con ropa de cama gris, repisa de madera con velas y plantas, y una ilustración mural en la pared blanca."
         width={504}
         height={378}
         loading="lazy"
@@ -73,35 +102,38 @@ import MapsSection from "../components/MapsSection";
     </figure>
   </section>
 
-  <!-- The End Result Section -->
-
+  <!-- Cómo entiende el cuidado -->
   <section
     class="w-full pt-[100px] lg:pt-[140px] px-5 md:px-12 lg:px-0 mx-auto lg:max-w-[1200px] grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
   >
     <div class="lg:col-span-6 lg:col-start-7 flex flex-col gap-7">
       <p class="eyebrow text-accent flex items-center gap-4">
         <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
-        02 · Nuestro objetivo
+        Nuestra forma de cuidar
       </p>
       <h2
         class="font-dm text-[32px] leading-[1.12] md:text-[44px] text-ink max-w-[16ch]"
       >
-        Nuestro Objetivo
+        El bienestar no es un lujo, es una forma de pausar
       </h2>
       <p
         class="font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[54ch]"
       >
-        En Melari Spa, nuestro objetivo es ayudarte a sentirte y verte mejor.
-        Creemos que la belleza y el bienestar van de la mano, y ofrecemos
-        tratamientos que te ayudarán a lograr un equilibrio entre ambos.
-        Nuestro equipo de profesionales altamente capacitados está aquí para
-        ayudarte a lograr tus objetivos de belleza y bienestar.
+        Creemos que belleza y bienestar van de la mano: cuando el cuerpo está
+        en calma, se nota por dentro y por fuera. Por eso cada visita se
+        planea como una experiencia completa, no como un trámite.
+      </p>
+      <p
+        class="font-jost text-base md:text-lg leading-[30px] text-ink-soft max-w-[54ch]"
+      >
+        El ambiente, el ritmo y la atención están pensados para que al salir
+        te lleves algo más que un tratamiento: una pausa que se queda contigo.
       </p>
     </div>
     <figure class="lg:col-span-6 paper-frame rounded-card overflow-hidden">
       <img
         src="/about2.jpg"
-        alt=""
+        alt="Sala de tratamientos de Melari Spa con camilla de masaje, equipo estético portátil y un mueble con plantas y cuadros en la pared."
         width={504}
         height={378}
         loading="lazy"
@@ -109,6 +141,27 @@ import MapsSection from "../components/MapsSection";
         class="w-full aspect-[4/3] object-cover"
       />
     </figure>
+  </section>
+
+  <!-- CTA band antes del mapa -->
+  <section class="w-full lg:max-w-[1200px] px-5 md:px-12 xl:px-0 mx-auto pt-[100px] lg:pt-[140px]">
+    <div class="paper-frame rounded-card px-6 py-10 md:px-12 md:py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="max-w-[46ch]">
+        <p class="eyebrow text-accent flex items-center gap-4">
+          <span aria-hidden="true" class="inline-block h-px w-10 bg-line"></span>
+          Da el primer paso
+        </p>
+        <h2 class="mt-4 font-dm text-[28px] leading-[1.12] md:text-[36px] text-ink">
+          Conoce los tratamientos y encuentra tu próxima pausa
+        </h2>
+      </div>
+      <a
+        href={ctaHref}
+        class="shrink-0 rounded-full bg-primary-200 inline-flex items-center gap-2 px-9 py-4 text-white font-semibold tracking-tight transition-colors duration-300 hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      >
+        {ctaLabel}
+      </a>
+    </div>
   </section>
 
   <!-- Maps Section -->
